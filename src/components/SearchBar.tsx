@@ -144,7 +144,7 @@ function SearchBarContent({ isOpen, onClose }: SearchBarProps) {
       />
 
       {/* Modal panel - light pink background */}
-      <div className="absolute top-0 left-0 right-0 bg-[#fdf2f5] shadow-2xl border-b border-[#f2d0d8] animate-in">
+      <div className="absolute top-0 left-0 right-0 bg-[#fae0e6] shadow-2xl border-b border-[#f2d0d8] animate-in">
         <div className="max-w-4xl mx-auto px-4 py-6 md:py-8">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
@@ -153,7 +153,7 @@ function SearchBarContent({ isOpen, onClose }: SearchBarProps) {
             </h2>
             <button
               onClick={onClose}
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-white/80 text-muted hover:text-brand hover:bg-white transition-all"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-[#fdf2f5]/80 text-muted hover:text-brand hover:bg-[#fdf2f5] transition-all"
               aria-label="Cerrar búsqueda"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -164,7 +164,7 @@ function SearchBarContent({ isOpen, onClose }: SearchBarProps) {
 
           {/* Search input */}
           <form onSubmit={handleSearch}>
-            <div className="bg-white border border-[#f2d0d8] focus-within:border-[#db7581] focus-within:shadow-[0_0_0_3px_rgba(219,117,129,0.12)] rounded-xl px-5 py-3.5 flex flex-wrap items-center gap-2 transition-all duration-300 shadow-sm">
+            <div className="bg-[#fdf2f5] border border-[#f2d0d8] focus-within:border-[#db7581] focus-within:shadow-[0_0_0_3px_rgba(219,117,129,0.12)] rounded-xl px-5 py-3.5 flex flex-wrap items-center gap-2 transition-all duration-300 shadow-sm">
               {activeChips.map((chip) => (
                 <span
                   key={chip.key}
@@ -224,7 +224,7 @@ function SearchBarContent({ isOpen, onClose }: SearchBarProps) {
                   key={toggle.key}
                   type="button"
                   onClick={() => toggleFilter(toggle.key)}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all border bg-white/70 border-[#f2d0d8] text-muted hover:border-[#db7581]/40 hover:text-[#db7581] hover:bg-[#db7581]/5"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all border bg-[#fdf2f5]/70 border-[#f2d0d8] text-muted hover:border-[#db7581]/40 hover:text-[#db7581] hover:bg-[#db7581]/5"
                 >
                   <span>{toggle.icon}</span>
                   {toggle.label}

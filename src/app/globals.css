@@ -5,7 +5,7 @@
 }
 
 :root {
-  --background: #f9f9f9;
+  --background: #F8E4E8;
   --foreground: #1a1c1c;
 }
 
@@ -25,10 +25,10 @@
   --color-accent-light: #ca6687;
 
   /* Surface */
-  --color-surface: #f9f9f9;
-  --color-surface-alt: #f3f3f4;
-  --color-surface-container: #eeeeee;
-  --color-surface-dim: #dadada;
+  --color-surface: #F8E4E8;
+  --color-surface-alt: #F2D8DE;
+  --color-surface-container: #EBCCD3;
+  --color-surface-dim: #E0B8C0;
 
   /* Rose / pink tones */
   --color-rose: #f9e2e7;
@@ -58,7 +58,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #eeeeee;
+  background: #F8E4E8;
 }
 
 ::-webkit-scrollbar-thumb {

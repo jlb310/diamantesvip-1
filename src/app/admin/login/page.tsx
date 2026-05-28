@@ -104,7 +104,7 @@ export default function LoginPage() {
               }}
               className="w-full text-left px-3 py-2 bg-surface-container rounded-sm text-xs text-muted hover:text-brand transition-colors"
             >
-              <span className="font-semibold">Escort:</span> valentina@diamantes.vip / demo1234
+              <span className="font-semibold">Diamante:</span> valentina@diamantes.vip / demo1234
             </button>
           </div>
         </div>

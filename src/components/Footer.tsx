@@ -16,7 +16,7 @@ export function Footer() {
               className="h-24 w-auto mb-4 rounded-xl"
             />
             <p className="text-muted text-sm leading-relaxed max-w-xs">
-              Directorio de scort y acompanantes en Chile. Conectamos personas exigentes con perfiles verificados y experiencias unicas.
+              Directorio de Diamante y acompanantes en Chile. Conectamos personas exigentes con perfiles verificados y experiencias unicas.
             </p>
           </div>
 

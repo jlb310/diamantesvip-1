@@ -66,7 +66,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   const adminMenuItems: MenuItem[] = [
     { key: 'panel', href: '/admin', label: 'Panel', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg> },
-    { key: 'escorts', href: '/admin/escorts', label: 'Escorts', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg> },
+    { key: 'escorts', href: '/admin/escorts', label: 'Diamantes', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg> },
   ]
 
   const escortMenuItems: MenuItem[] = [
@@ -104,7 +104,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               Panel<span className="text-accent font-light">VIP</span>
             </Link>
             <span className={`text-[10px] px-2.5 py-0.5 rounded-full font-semibold uppercase tracking-[0.12em] flex-shrink-0 ${isAdmin ? 'bg-brand text-white' : 'bg-accent text-white'}`}>
-              {isAdmin ? 'Admin' : 'Escort'}
+              {isAdmin ? 'Admin' : 'Diamante'}
             </span>
           </div>
 
@@ -116,7 +116,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               </Link>
               {isAdmin && (
                 <Link href="/admin/escorts" className="text-muted-light hover:text-brand transition-colors duration-300 whitespace-nowrap">
-                  Escorts
+                  Diamantes
                 </Link>
               )}
               {!isAdmin && (

@@ -121,7 +121,7 @@ export function SearchBar({ initialQ = '', initialToggles = [] }: SearchBarProps
           {/* Glass panel — floating luxury card */}
           <div className="glass-luxe rounded-sm p-5 md:p-6">
             <h2 className="text-xl md:text-2xl font-bold text-brand font-serif italic tracking-[0.02em] mb-4">
-              Busca scort y acompanante por ciudad o servicio
+              Busca Diamante y acompanante por ciudad o servicio
             </h2>
 
             <form onSubmit={handleSearch}>
@@ -152,7 +152,7 @@ export function SearchBar({ initialQ = '', initialToggles = [] }: SearchBarProps
                   type="text"
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
-                  placeholder={activeChips.length === 0 ? 'Scort en Santiago, acompanante VIP, masajes...' : ''}
+                  placeholder={activeChips.length === 0 ? 'Diamante en Santiago, acompanante VIP, masajes...' : ''}
                   className="flex-1 min-w-[180px] bg-transparent text-brand outline-none placeholder:text-muted-light text-base py-2 font-light"
                 />
 

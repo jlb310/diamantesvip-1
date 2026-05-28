@@ -103,7 +103,7 @@ export function Header() {
               href="/dev-login?role=escort"
               className="text-[#db7581] hover:text-accent transition-colors duration-300"
             >
-              Escort
+              Diamante
             </Link>
           </nav>
 
@@ -211,7 +211,7 @@ export function Header() {
                 onClick={() => setMenuOpen(false)}
                 className="group flex items-center py-3.5 px-4 rounded-xl text-[#db7581] hover:text-brand hover:bg-[#f9dade]/60 transition-all duration-300"
               >
-                <span className="text-base font-medium tracking-wide">Escort</span>
+                <span className="text-base font-medium tracking-wide">Diamante</span>
                 <svg className="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-[#db7581]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>

@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
     })
 
     if (!escort) {
-      return NextResponse.json({ error: 'Escort no encontrada' }, { status: 404 })
+      return NextResponse.json({ error: 'Diamante no encontrada' }, { status: 404 })
     }
 
     const plan = await prisma.membershipPlan.findUnique({

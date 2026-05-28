@@ -8,14 +8,14 @@ import type { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Scort y acompanantes en Chile',
+  title: 'Diamante y acompanantes en Chile',
   description:
-    'Explora perfiles de scort y acompanantes en Chile por ciudad, precio y disponibilidad en Diamantes VIP.',
+    'Explora perfiles de Diamante y acompanantes en Chile por ciudad, precio y disponibilidad en Diamantes VIP.',
   alternates: { canonical: '/home' },
   openGraph: {
-    title: 'Scort y acompanantes en Chile',
+    title: 'Diamante y acompanantes en Chile',
     description:
-      'Explora perfiles de scort y acompanantes en Chile por ciudad, precio y disponibilidad en Diamantes VIP.',
+      'Explora perfiles de Diamante y acompanantes en Chile por ciudad, precio y disponibilidad en Diamantes VIP.',
     url: '/home',
     type: 'website',
   },
@@ -133,7 +133,7 @@ export default async function Home({ searchParams }: HomeProps) {
     name: 'Diamantes VIP',
     url: 'https://diamantesvip.cl',
     description:
-      'Directorio de scort y acompanantes en Chile con perfiles verificados y busqueda por ciudad.',
+      'Directorio de Diamante y acompanantes en Chile con perfiles verificados y busqueda por ciudad.',
     inLanguage: 'es-CL',
     potentialAction: {
       '@type': 'SearchAction',

@@ -19,13 +19,13 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL('https://diamantesvip.cl'),
   title: {
-    default: "Diamantes VIP - Acompanantes y scort en Chile",
+    default: "Diamantes VIP - Acompanantes y Diamante en Chile",
     template: "%s | Diamantes VIP",
   },
   description:
-    "Directorio de acompanantes y scort en Chile. Encuentra perfiles verificados, ciudades y servicios en Diamantes VIP.",
+    "Directorio de acompanantes y Diamante en Chile. Encuentra perfiles verificados, ciudades y servicios en Diamantes VIP.",
   keywords: [
-    "scort",
+    "Diamante",
     "acompanante",
     "acompanantes",
     "escort",
@@ -45,9 +45,9 @@ export const metadata: Metadata = {
     shortcut: ['/favicono.png'],
   },
   openGraph: {
-    title: "Diamantes VIP - Acompanantes y scort en Chile",
+    title: "Diamantes VIP - Acompanantes y Diamante en Chile",
     description:
-      "Directorio de acompanantes y scort en Chile con perfiles verificados y busqueda por ciudad.",
+      "Directorio de acompanantes y Diamante en Chile con perfiles verificados y busqueda por ciudad.",
     url: "/",
     siteName: "Diamantes VIP",
     locale: "es_CL",
@@ -63,9 +63,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Diamantes VIP - Acompanantes y scort en Chile',
+    title: 'Diamantes VIP - Acompanantes y Diamante en Chile',
     description:
-      'Directorio de acompanantes y scort en Chile con perfiles verificados y busqueda por ciudad.',
+      'Directorio de acompanantes y Diamante en Chile con perfiles verificados y busqueda por ciudad.',
     images: ['/logo_diamantes_pronto.png'],
   },
   manifest: "/manifest.json",

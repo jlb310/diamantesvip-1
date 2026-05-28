@@ -36,15 +36,15 @@ export async function generateMetadata({
   }
 
   const profileName = escort.alias || escort.name
-  const title = `${profileName} - scort y acompanante en ${escort.city}`
+  const title = `${profileName} - Diamante y acompanante en ${escort.city}`
   const description =
     escort.description?.slice(0, 150) ||
-    `Conoce a ${profileName}, scort y acompanante en ${escort.city}. Perfil y disponibilidad en Diamantes VIP.`
+    `Conoce a ${profileName}, Diamante y acompanante en ${escort.city}. Perfil y disponibilidad en Diamantes VIP.`
 
   return {
     title,
     description,
-    keywords: ['scort', 'acompanante', 'escort', escort.city, profileName],
+    keywords: ['Diamante', 'acompanante', 'escort', escort.city, profileName],
     alternates: { canonical: `/escort/${id}` },
     openGraph: {
       title,

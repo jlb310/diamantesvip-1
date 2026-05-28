@@ -52,12 +52,21 @@ export const metadata: Metadata = {
     siteName: "Diamantes VIP",
     locale: "es_CL",
     type: "website",
+    images: [
+      {
+        url: '/logo_diamantes_pronto.png',
+        width: 1200,
+        height: 1200,
+        alt: 'Diamantes VIP',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Diamantes VIP - Acompanantes y scort en Chile',
     description:
       'Directorio de acompanantes y scort en Chile con perfiles verificados y busqueda por ciudad.',
+    images: ['/logo_diamantes_pronto.png'],
   },
   manifest: "/manifest.json",
   robots: {

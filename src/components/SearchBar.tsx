@@ -101,10 +101,19 @@ export function SearchBar({ initialQ = '', initialToggles = [] }: SearchBarProps
   const activeChips = TOGGLES.filter((t) => activeToggles.has(t.key))
 
   return (
-    <section className="relative overflow-hidden flex items-center">
-      {/* Subtle background */}
-      <div className="absolute inset-0 bg-surface" />
-      <div className="absolute inset-0 bg-gradient-to-tr from-accent/5 via-transparent to-transparent" />
+    <section className="relative overflow-hidden flex items-center min-h-[320px]">
+      {/* Video background */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0"
+      >
+        <source src="/videos/video-top.mp4" type="video/mp4" />
+      </video>
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-black/50 z-[1]" />
 
       {/* VS-style glass content panel */}
       <div className="relative z-10 w-full">

@@ -80,7 +80,7 @@ export const metadata: Metadata = {
   },
   other: {
     "mobile-web-app-capable": "yes",
-    "theme-color": "#F0C6CC",
+    "theme-color": "#221d1d",
   },
 }
 
@@ -92,7 +92,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${publicSans.variable} ${cormorant.variable} h-full antialiased`}>
       <head>
-        <meta name="theme-color" content="#F0C6CC" />
+        <meta name="theme-color" content="#221d1d" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Diamantes VIP" />

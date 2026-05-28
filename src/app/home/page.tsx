@@ -158,7 +158,7 @@ export default async function Home({ searchParams }: HomeProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-surface" />
+        <div className="absolute inset-0" style={{ backgroundColor: '#F8E4E8' }} />
         <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-accent/3 rounded-full blur-[150px] -translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-rose/20 rounded-full blur-[120px] translate-x-1/3 translate-y-1/3" />
         <div className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-accent-light/4 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2" />

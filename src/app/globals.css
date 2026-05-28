@@ -5,7 +5,7 @@
 }
 
 :root {
-  --background: #F0C6CC;
+  --background: #f9f9f9;
   --foreground: #1a1c1c;
 }
 
@@ -24,11 +24,11 @@
   --color-accent-hover: #8c3a5a;
   --color-accent-light: #ca6687;
 
-  /* Surface — pink base */
-  --color-surface: #F0C6CC;
-  --color-surface-alt: #F5D0D6;
-  --color-surface-container: #E8B5BC;
-  --color-surface-dim: #DDA0A8;
+  /* Surface */
+  --color-surface: #f9f9f9;
+  --color-surface-alt: #f3f3f4;
+  --color-surface-container: #eeeeee;
+  --color-surface-dim: #dadada;
 
   /* Rose / pink tones */
   --color-rose: #f9e2e7;
@@ -58,7 +58,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #F0C6CC;
+  background: #eeeeee;
 }
 
 ::-webkit-scrollbar-thumb {

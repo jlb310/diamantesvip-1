@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma'
 import { EscortCard } from '@/components/EscortCard'
 import { StoriesRow } from '@/components/StoriesRow'
 import { ShortsRow } from '@/components/ShortsRow'
+import { HeroVideo } from '@/components/HeroVideo'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -165,6 +166,7 @@ export default async function Home({ searchParams }: HomeProps) {
       </div>
 
       <div className="relative">
+        <HeroVideo />
         <StoriesRow escorts={storyEscorts} />
 
         <div className="max-w-7xl mx-auto px-4 py-12">

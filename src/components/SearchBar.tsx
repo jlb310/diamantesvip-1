@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useEffect, useRef } from 'react'
+import { useState, useCallback, useEffect, useRef, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 const TOGGLES = [
@@ -65,7 +65,7 @@ interface SearchBarProps {
   onClose: () => void
 }
 
-export function SearchBar({ isOpen, onClose }: SearchBarProps) {
+function SearchBarContent({ isOpen, onClose }: SearchBarProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const inputRef = useRef<HTMLInputElement>(null)
@@ -240,5 +240,13 @@ export function SearchBar({ isOpen, onClose }: SearchBarProps) {
         </div>
       </div>
     </div>
+  )
+}
+
+export function SearchBar({ isOpen, onClose }: SearchBarProps) {
+  return (
+    <Suspense fallback={null}>
+      <SearchBarContent isOpen={isOpen} onClose={onClose} />
+    </Suspense>
   )
 }

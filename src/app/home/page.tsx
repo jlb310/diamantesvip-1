@@ -1,6 +1,5 @@
 import { prisma } from '@/lib/prisma'
 import { EscortCard } from '@/components/EscortCard'
-import { SearchBar } from '@/components/SearchBar'
 import { StoriesRow } from '@/components/StoriesRow'
 import { ShortsRow } from '@/components/ShortsRow'
 import type { Metadata } from 'next'
@@ -51,24 +50,34 @@ export default async function Home({ searchParams }: HomeProps) {
         { description: { contains: params.q } },
         { nationality: { contains: params.q } },
         { services: { contains: params.q } },
+        { bodyType: { contains: params.q } },
+        { hairColor: { contains: params.q } },
+        { eyeColor: { contains: params.q } },
+        { bustSize: { contains: params.q } },
+        { buttSize: { contains: params.q } },
+        { waxing: { contains: params.q } },
+        { languages: { contains: params.q } },
       ],
     })
   }
 
-  if (toggleKeys.includes('video')) {
-    conditions.push({ videos: { some: {} } })
+  if (toggleKeys.includes('verificada')) {
+    conditions.push({ verified: true })
   }
-  if (toggleKeys.includes('cara')) {
-    conditions.push({ mainPhoto: { not: null } })
+  if (toggleKeys.includes('vip')) {
+    conditions.push({ tier: 'VIP' })
   }
-  if (toggleKeys.includes('experiencias')) {
-    conditions.push({ reviews: { some: {} } })
+  if (toggleKeys.includes('domicilio')) {
+    conditions.push({ homeService: true })
   }
-  if (toggleKeys.includes('disponible')) {
-    conditions.push({ availability: { not: null } })
+  if (toggleKeys.includes('tatuajes')) {
+    conditions.push({ tattoos: true })
   }
-  if (toggleKeys.includes('promocion')) {
-    conditions.push({ featured: true })
+  if (toggleKeys.includes('piercings')) {
+    conditions.push({ piercings: true })
+  }
+  if (toggleKeys.includes('depto')) {
+    conditions.push({ atHome: true })
   }
 
   if (params.tier && ['VIP', 'Gold', 'Silver'].includes(params.tier)) {
@@ -156,8 +165,6 @@ export default async function Home({ searchParams }: HomeProps) {
       </div>
 
       <div className="relative">
-        <SearchBar initialQ={params.q || ''} initialToggles={toggleKeys} />
-
         <StoriesRow escorts={storyEscorts} />
 
         <div className="max-w-7xl mx-auto px-4 py-12">

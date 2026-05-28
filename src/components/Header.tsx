@@ -4,16 +4,19 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { SearchBar } from '@/components/SearchBar'
 
 export function Header() {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const [hidden, setHidden] = useState(false)
   const lastScrollY = useRef(0)
 
-  // Close menu on route change
+  // Close overlays on route change
   useEffect(() => {
     setMenuOpen(false)
+    setSearchOpen(false)
   }, [pathname])
 
   // Lock body scroll when menu is open
@@ -93,6 +96,15 @@ export function Header() {
                 </Link>
               )
             )}
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="text-muted-light hover:text-[#db7581] transition-colors duration-300"
+              aria-label="Buscar"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </button>
             <Link
               href="/dev-login?role=admin"
               className="text-[#db7581] hover:text-accent transition-colors duration-300"
@@ -107,31 +119,43 @@ export function Header() {
             </Link>
           </nav>
 
-          {/* Mobile hamburger */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className={`md:hidden relative flex flex-col justify-center items-center w-10 h-10 gap-1.5 transition-opacity duration-300 ${
-              menuOpen ? 'z-[70]' : 'z-50'
-            }`}
-            aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
-            aria-expanded={menuOpen}
-          >
-            <span
-              className={`block w-6 h-0.5 transition-all duration-300 ${
-                menuOpen ? 'rotate-45 translate-y-2 bg-brand' : 'bg-[#db7581]'
+          {/* Mobile controls */}
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="w-10 h-10 flex items-center justify-center text-muted-light hover:text-[#db7581] transition-colors duration-300"
+              aria-label="Buscar"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </button>
+
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className={`relative flex flex-col justify-center items-center w-10 h-10 gap-1.5 transition-opacity duration-300 ${
+                menuOpen ? 'z-[70]' : 'z-50'
               }`}
-            />
-            <span
-              className={`block w-6 h-0.5 transition-all duration-300 ${
-                menuOpen ? 'opacity-0 bg-brand' : 'bg-[#db7581]'
-              }`}
-            />
-            <span
-              className={`block w-6 h-0.5 transition-all duration-300 ${
-                menuOpen ? '-rotate-45 -translate-y-2 bg-brand' : 'bg-[#db7581]'
-              }`}
-            />
-          </button>
+              aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+              aria-expanded={menuOpen}
+            >
+              <span
+                className={`block w-6 h-0.5 transition-all duration-300 ${
+                  menuOpen ? 'rotate-45 translate-y-2 bg-brand' : 'bg-[#db7581]'
+                }`}
+              />
+              <span
+                className={`block w-6 h-0.5 transition-all duration-300 ${
+                  menuOpen ? 'opacity-0 bg-brand' : 'bg-[#db7581]'
+                }`}
+              />
+              <span
+                className={`block w-6 h-0.5 transition-all duration-300 ${
+                  menuOpen ? '-rotate-45 -translate-y-2 bg-brand' : 'bg-[#db7581]'
+                }`}
+              />
+            </button>
+          </div>
         </div>
       </header>
 
@@ -225,6 +249,8 @@ export function Header() {
           </div>
         </div>
       </div>
+
+      <SearchBar isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   )
 }

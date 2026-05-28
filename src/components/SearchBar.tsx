@@ -1,66 +1,100 @@
 'use client'
 
-import { useState, useCallback } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useCallback, useEffect, useRef } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 const TOGGLES = [
   {
-    key: 'video',
-    label: 'Con Video',
+    key: 'verificada',
+    label: 'Verificada',
     icon: (
-      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M8 5v14l11-7z" />
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
       </svg>
     ),
   },
   {
-    key: 'cara',
-    label: 'Cara Visible',
+    key: 'vip',
+    label: 'Diamante VIP',
     icon: (
       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
       </svg>
     ),
   },
   {
-    key: 'experiencias',
-    label: 'Con Experiencias',
+    key: 'domicilio',
+    label: 'Domicilio',
     icon: (
       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
       </svg>
     ),
   },
   {
-    key: 'disponible',
-    label: 'Disponible ahora',
+    key: 'tatuajes',
+    label: 'Con Tatuajes',
     icon: (
       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
       </svg>
     ),
   },
   {
-    key: 'promocion',
-    label: 'En Promoción',
+    key: 'piercings',
+    label: 'Con Piercings',
     icon: (
       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    ),
+  },
+  {
+    key: 'depto',
+    label: 'Depto Propio',
+    icon: (
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
       </svg>
     ),
   },
 ]
 
 interface SearchBarProps {
-  initialQ?: string
-  initialToggles?: string[]
+  isOpen: boolean
+  onClose: () => void
 }
 
-export function SearchBar({ initialQ = '', initialToggles = [] }: SearchBarProps) {
+export function SearchBar({ isOpen, onClose }: SearchBarProps) {
   const router = useRouter()
-  const [q, setQ] = useState(initialQ)
-  const [activeToggles, setActiveToggles] = useState<Set<string>>(new Set(initialToggles))
+  const searchParams = useSearchParams()
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const [q, setQ] = useState('')
+  const [activeToggles, setActiveToggles] = useState<Set<string>>(new Set())
+
+  // Read current URL params when opening
+  useEffect(() => {
+    if (isOpen && searchParams) {
+      setQ(searchParams.get('q') || '')
+      const toggles = searchParams.get('toggles')?.split(',') || []
+      setActiveToggles(new Set(toggles))
+      // Focus input after opening
+      setTimeout(() => inputRef.current?.focus(), 100)
+    }
+  }, [isOpen, searchParams])
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
 
   const navigate = useCallback(
     (newQ: string, newToggles: Set<string>) => {
@@ -71,8 +105,9 @@ export function SearchBar({ initialQ = '', initialToggles = [] }: SearchBarProps
       }
       const qs = params.toString()
       router.push(qs ? `/home?${qs}` : '/home')
+      onClose()
     },
-    [router]
+    [router, onClose]
   )
 
   const toggleFilter = (key: string) => {
@@ -83,14 +118,12 @@ export function SearchBar({ initialQ = '', initialToggles = [] }: SearchBarProps
       next.add(key)
     }
     setActiveToggles(next)
-    navigate(q, next)
   }
 
   const removeTag = (key: string) => {
     const next = new Set(activeToggles)
     next.delete(key)
     setActiveToggles(next)
-    navigate(q, next)
   }
 
   const handleSearch = (e: React.FormEvent) => {
@@ -100,97 +133,112 @@ export function SearchBar({ initialQ = '', initialToggles = [] }: SearchBarProps
 
   const activeChips = TOGGLES.filter((t) => activeToggles.has(t.key))
 
+  if (!isOpen) return null
+
   return (
-    <section className="relative overflow-hidden flex items-center min-h-[320px]">
-      {/* Video background */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0"
-      >
-        <source src="/videos/video-top.mp4" type="video/mp4" />
-      </video>
-      {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-black/50 z-[1]" />
+    <div className="fixed inset-0 z-[80]">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-brand/40 backdrop-blur-sm transition-opacity duration-300"
+        onClick={onClose}
+      />
 
-      {/* VS-style glass content panel */}
-      <div className="relative z-10 w-full">
-        <div className="max-w-[95%] xl:max-w-6xl mx-auto px-4 py-6">
-          {/* Glass panel — floating luxury card */}
-          <div className="glass-luxe rounded-sm p-5 md:p-6">
-            <h2 className="text-xl md:text-2xl font-bold text-brand font-serif italic tracking-[0.02em] mb-4">
-              Busca Diamante y acompanante por ciudad o servicio
+      {/* Modal panel - light pink background */}
+      <div className="absolute top-0 left-0 right-0 bg-[#fdf2f5] shadow-2xl border-b border-[#f2d0d8] animate-in">
+        <div className="max-w-4xl mx-auto px-4 py-6 md:py-8">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl md:text-2xl font-bold text-brand font-serif italic tracking-[0.02em]">
+              Busca Diamante por ciudad, físico o servicio
             </h2>
-
-            <form onSubmit={handleSearch}>
-              <div className="bg-surface border border-border-light focus-within:border-accent focus-within:shadow-[0_0_0_3px_rgba(175,80,113,0.08)] rounded-sm px-5 py-3 flex flex-wrap items-center gap-2 transition-all duration-300">
-                {activeChips.map((chip) => (
-                  <span
-                    key={chip.key}
-                    className="inline-flex items-center gap-1.5 bg-accent/10 border border-accent/20 text-accent px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap"
-                  >
-                    <span className="text-accent">{chip.icon}</span>
-                    {chip.label}
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        removeTag(chip.key)
-                      }}
-                      className="ml-0.5 hover:text-brand transition-colors"
-                    >
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </span>
-                ))}
-
-                <input
-                  type="text"
-                  value={q}
-                  onChange={(e) => setQ(e.target.value)}
-                  placeholder={activeChips.length === 0 ? 'Diamante en Santiago, acompanante VIP, masajes...' : ''}
-                  className="flex-1 min-w-[180px] bg-transparent text-brand outline-none placeholder:text-muted-light text-base py-2 font-light"
-                />
-
-                <button
-                  type="submit"
-                  className="text-white px-4 py-2.5 rounded-sm transition-all duration-300 hover:shadow-lg flex-shrink-0 flex items-center justify-center"
-                  style={{ backgroundColor: '#db7581' }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#c5636f')}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#db7581')}
-                >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </button>
-              </div>
-            </form>
-
-            {/* Toggle pills */}
-            <div className="flex flex-wrap gap-2 mt-5">
-              {TOGGLES.map((toggle) => {
-                const active = activeToggles.has(toggle.key)
-                if (active) return null
-                return (
-                  <button
-                    key={toggle.key}
-                    type="button"
-                    onClick={() => toggleFilter(toggle.key)}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all border bg-surface/60 backdrop-blur-sm border-border/60 text-muted-light hover:border-accent/40 hover:text-accent hover:bg-accent/5"
-                  >
-                    <span>{toggle.icon}</span>
-                    {toggle.label}
-                  </button>
-                )
-              })}
-            </div>
+            <button
+              onClick={onClose}
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-white/80 text-muted hover:text-brand hover:bg-white transition-all"
+              aria-label="Cerrar búsqueda"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
+
+          {/* Search input */}
+          <form onSubmit={handleSearch}>
+            <div className="bg-white border border-[#f2d0d8] focus-within:border-[#db7581] focus-within:shadow-[0_0_0_3px_rgba(219,117,129,0.12)] rounded-xl px-5 py-3.5 flex flex-wrap items-center gap-2 transition-all duration-300 shadow-sm">
+              {activeChips.map((chip) => (
+                <span
+                  key={chip.key}
+                  className="inline-flex items-center gap-1.5 bg-[#db7581]/10 border border-[#db7581]/20 text-[#db7581] px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap"
+                >
+                  <span>{chip.icon}</span>
+                  {chip.label}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      removeTag(chip.key)
+                    }}
+                    className="ml-0.5 hover:text-brand transition-colors"
+                  >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </span>
+              ))}
+
+              <input
+                ref={inputRef}
+                type="text"
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder={activeChips.length === 0 ? 'Busca por ciudad, nacionalidad, físico, servicios...' : ''}
+                className="flex-1 min-w-[180px] bg-transparent text-brand outline-none placeholder:text-muted-light text-base py-2 font-light"
+              />
+
+              <button
+                type="submit"
+                className="text-white px-5 py-2.5 rounded-xl transition-all duration-300 hover:shadow-lg flex-shrink-0 flex items-center gap-2 font-medium text-sm"
+                style={{ backgroundColor: '#db7581' }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#c5636f')}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#db7581')}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                Buscar
+              </button>
+            </div>
+          </form>
+
+          {/* Toggle pills */}
+          <div className="flex flex-wrap gap-2 mt-4">
+            <span className="text-xs text-muted-light uppercase tracking-wider font-medium mr-2 pt-1.5">
+              Filtros:
+            </span>
+            {TOGGLES.map((toggle) => {
+              const active = activeToggles.has(toggle.key)
+              if (active) return null
+              return (
+                <button
+                  key={toggle.key}
+                  type="button"
+                  onClick={() => toggleFilter(toggle.key)}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all border bg-white/70 border-[#f2d0d8] text-muted hover:border-[#db7581]/40 hover:text-[#db7581] hover:bg-[#db7581]/5"
+                >
+                  <span>{toggle.icon}</span>
+                  {toggle.label}
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Hint text */}
+          <p className="text-xs text-muted-light mt-4">
+            Puedes buscar por: ciudad, nacionalidad, color de cabello, tipo de cuerpo, servicios y más.
+          </p>
         </div>
       </div>
-    </section>
+    </div>
   )
 }

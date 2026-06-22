@@ -43,7 +43,7 @@ export async function PUT(req: NextRequest) {
     }
 
     const body = await req.json()
-    const { escortId, featured, verified, active } = body
+    const { escortId, featured, verified, active, status } = body
 
     if (!escortId) {
       return NextResponse.json({ error: 'Falta escortId' }, { status: 400 })
@@ -53,6 +53,9 @@ export async function PUT(req: NextRequest) {
     if (typeof featured === 'boolean') updateData.featured = featured
     if (typeof verified === 'boolean') updateData.verified = verified
     if (typeof active === 'boolean') updateData.active = active
+    if (status === 'approved' || status === 'pending' || status === 'rejected') {
+      updateData.status = status
+    }
 
     const escort = await prisma.escort.update({
       where: { id: escortId },

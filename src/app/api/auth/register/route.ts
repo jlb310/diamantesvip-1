@@ -29,6 +29,7 @@ export async function POST(request: Request) {
             alias: alias || null,
             age: parseInt(age),
             city,
+            status: 'pending', // requiere aprobación del administrador antes de publicarse
           },
         },
       },

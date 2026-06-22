@@ -8,6 +8,7 @@ export default function AdminDashboard() {
   const router = useRouter()
   const [user, setUser] = useState<any>(null)
   const [escortId, setEscortId] = useState<string | null>(null)
+  const [escortStatus, setEscortStatus] = useState<string | null>(null)
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -27,6 +28,7 @@ export default function AdminDashboard() {
       })
       const data = await res.json()
       if (data.escort?.id) setEscortId(data.escort.id)
+      if (data.escort?.status) setEscortStatus(data.escort.status)
     } catch {}
   }
 
@@ -53,6 +55,31 @@ export default function AdminDashboard() {
         </p>
       </div>
 
+      {/* Aviso de estado de aprobación (solo diamantes) */}
+      {!isAdmin && escortStatus === 'pending' && (
+        <div className="mb-6 rounded-sm border border-amber-300 bg-amber-50 px-5 py-4 flex items-start gap-3">
+          <span className="text-xl leading-none">⏳</span>
+          <div>
+            <p className="text-sm font-semibold text-amber-800">Tu perfil está en revisión</p>
+            <p className="text-xs text-amber-700 mt-0.5">
+              Nuestro equipo revisará tu perfil antes de publicarlo. Mientras tanto, completa tus datos y sube tus fotos para acelerar la aprobación.
+            </p>
+          </div>
+        </div>
+      )}
+      {!isAdmin && escortStatus === 'rejected' && (
+        <div className="mb-6 rounded-sm border border-red-300 bg-red-50 px-5 py-4 flex items-start gap-3">
+          <span className="text-xl leading-none">⚠️</span>
+          <div>
+            <p className="text-sm font-semibold text-red-700">Tu perfil no fue aprobado</p>
+            <p className="text-xs text-red-600 mt-0.5">
+              Revisa que tus datos y fotos cumplan con los requisitos. Si tienes dudas,{' '}
+              <a href="https://wa.me/56932508878" target="_blank" className="underline font-medium">escríbenos por WhatsApp</a>.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Quick actions */}
       <div className="mb-8">
         <h2 className="text-xs font-semibold text-muted-light uppercase tracking-[0.12em] mb-3">Acciones rápidas</h2>
@@ -67,6 +94,9 @@ export default function AdminDashboard() {
               </Link>
               <Link href="/admin/historias" className="bg-accent hover:bg-accent-hover text-white font-semibold px-5 py-2.5 rounded-sm text-xs uppercase tracking-[0.1em] transition-all hover:shadow-lg hover:shadow-accent/20 glow-pulse">
                 Subir historias
+              </Link>
+              <Link href="/admin/tutorial" className="glass text-brand font-semibold px-5 py-2.5 rounded-sm text-xs uppercase tracking-[0.1em] transition-all hover:border-accent/40">
+                📖 Ver tutorial
               </Link>
             </>
           )}
@@ -84,21 +114,19 @@ export default function AdminDashboard() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             </div>
-            <h2 className="text-lg font-bold text-brand font-serif mb-1.5 group-hover:text-accent transition-colors">Escorts</h2>
+            <h2 className="text-lg font-bold text-brand font-serif mb-1.5 group-hover:text-accent transition-colors">Diamantes</h2>
             <p className="text-muted-light text-sm">Gestiona perfiles, verificaciones y destacados.</p>
           </Link>
-          <div className="glass-float rounded-sm p-7">
+          <Link href="/admin/stats" className="glass-float rounded-sm p-7 group hover:border-accent/30 transition-all duration-400 hover:-translate-y-1">
             <div className="text-4xl mb-4">📊</div>
-            <h2 className="text-lg font-bold text-brand font-serif mb-1.5">Estadísticas</h2>
-            <p className="text-muted-light text-sm mb-4">Visitas, contactos y métricas del sitio.</p>
-            <span className="text-[10px] text-muted-light uppercase tracking-[0.12em]">Próximamente</span>
-          </div>
-          <div className="glass-float rounded-sm p-7">
+            <h2 className="text-lg font-bold text-brand font-serif mb-1.5 group-hover:text-accent transition-colors">Estadísticas</h2>
+            <p className="text-muted-light text-sm">Resumen de perfiles, fotos, videos y aprobaciones.</p>
+          </Link>
+          <Link href="/admin/config" className="glass-float rounded-sm p-7 group hover:border-accent/30 transition-all duration-400 hover:-translate-y-1">
             <div className="text-4xl mb-4">⚙️</div>
-            <h2 className="text-lg font-bold text-brand font-serif mb-1.5">Configuración</h2>
-            <p className="text-muted-light text-sm mb-4">Ajustes generales del sitio.</p>
-            <span className="text-[10px] text-muted-light uppercase tracking-[0.12em]">Próximamente</span>
-          </div>
+            <h2 className="text-lg font-bold text-brand font-serif mb-1.5 group-hover:text-accent transition-colors">Configuración</h2>
+            <p className="text-muted-light text-sm">Datos de contacto del sitio (WhatsApp y correo).</p>
+          </Link>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 stagger">
@@ -120,6 +148,16 @@ export default function AdminDashboard() {
             </div>
             <h2 className="text-lg font-bold text-brand font-serif mb-1.5 group-hover:text-accent transition-colors">Fotos y Videos</h2>
             <p className="text-muted-light text-sm">Sube hasta 8 fotos. Selecciona tu foto principal.</p>
+          </Link>
+
+          <Link href="/admin/tutorial" className="glass-float rounded-sm p-5 group hover:border-accent/30 transition-all duration-400 hover:-translate-y-1">
+            <div className="w-10 h-10 bg-accent/10 rounded-sm flex items-center justify-center text-accent mb-4 group-hover:bg-accent group-hover:text-white transition-all duration-400">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <h2 className="text-lg font-bold text-brand font-serif mb-1.5 group-hover:text-accent transition-colors">Tutorial</h2>
+            <p className="text-muted-light text-sm">Guía paso a paso para completar tu perfil y subir tu material.</p>
           </Link>
 
           <Link href="/admin/membresia" className="glass-float rounded-sm p-5 group hover:border-accent/30 transition-all duration-400 hover:-translate-y-1">

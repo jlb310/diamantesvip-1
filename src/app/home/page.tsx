@@ -39,7 +39,7 @@ export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams
   const toggleKeys = params.toggles ? params.toggles.split(',') : []
 
-  const where: Record<string, unknown> = { active: true }
+  const where: Record<string, unknown> = { active: true, status: 'approved' }
   const conditions: Record<string, unknown>[] = []
 
   if (params.q) {
@@ -109,7 +109,7 @@ export default async function Home({ searchParams }: HomeProps) {
   })
 
   const shorts = await prisma.video.findMany({
-    where: { escort: { active: true } },
+    where: { escort: { active: true, status: 'approved' } },
     orderBy: { createdAt: 'desc' },
     include: {
       escort: {
@@ -120,7 +120,7 @@ export default async function Home({ searchParams }: HomeProps) {
   })
 
   const storyEscorts = await prisma.escort.findMany({
-    where: { active: true, videos: { some: {} } },
+    where: { active: true, status: 'approved', videos: { some: {} } },
     orderBy: [{ featured: 'desc' }, { createdAt: 'desc' }],
     select: {
       id: true,

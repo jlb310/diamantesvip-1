@@ -30,6 +30,10 @@ model Escort {
   whatsapp    String?
   featured    Boolean  @default(false)
   active      Boolean  @default(true)
+  // Estado de aprobación: "approved" (visible) | "pending" (en revisión) | "rejected"
+  // Default approved para que los perfiles existentes sigan visibles tras db push.
+  // El registro de nuevas cuentas lo crea explícitamente como "pending".
+  status      String   @default("approved")
   mainPhoto   String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -140,4 +144,11 @@ model Payment {
 
   subscriptionId String
   subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+}
+
+// Configuración general del sitio (clave/valor). Editable desde /admin/config.
+model SiteSetting {
+  key       String   @id // "contactWhatsapp", "contactEmail"
+  value     String
+  updatedAt DateTime @updatedAt
 }

@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma'
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://diamantesvip.cl'
   const escorts = await prisma.escort.findMany({
-    where: { active: true },
+    where: { active: true, status: 'approved' },
     select: { id: true, updatedAt: true },
   })
 

@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic'
 
 async function getEscort(id: string) {
   const escort = await prisma.escort.findUnique({
-    where: { id, active: true },
+    where: { id, active: true, status: 'approved' },
     include: {
       photos: { orderBy: { order: 'asc' } },
       videos: { orderBy: { order: 'asc' } },
@@ -24,7 +24,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params
   const escort = await prisma.escort.findUnique({
-    where: { id, active: true },
+    where: { id, active: true, status: 'approved' },
     select: { name: true, alias: true, city: true, description: true },
   })
 
@@ -36,15 +36,15 @@ export async function generateMetadata({
   }
 
   const profileName = escort.alias || escort.name
-  const title = `${profileName} - Diamante y acompanante en ${escort.city}`
+  const title = `${profileName} - Diamante en ${escort.city}`
   const description =
     escort.description?.slice(0, 150) ||
-    `Conoce a ${profileName}, Diamante y acompanante en ${escort.city}. Perfil y disponibilidad en Diamantes VIP.`
+    `Conoce a ${profileName}, Diamante en ${escort.city}. Perfil y disponibilidad en Diamantes VIP.`
 
   return {
     title,
     description,
-    keywords: ['Diamante', 'acompanante', 'escort', escort.city, profileName],
+    keywords: ['Diamante', 'Diamantes', escort.city, profileName],
     alternates: { canonical: `/escort/${id}` },
     openGraph: {
       title,

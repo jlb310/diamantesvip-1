@@ -394,7 +394,22 @@ export default function EscortProfilePage({ escort }: { escort: EscortProfile })
         {/* Contacto */}
         {(escort.whatsapp || escort.phone) && (
           <div className="glass-card border border-border rounded-[24px] p-4 md:p-6 mb-6">
-            <h2 className="text-lg md:text-xl font-display text-brand mb-4">Contacto</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="preloader-contact">
+                <span className="preloader-ring" />
+                <span className="preloader-ring" />
+                <span className="preloader-ring" />
+                <Image
+                  src="/preloader.png"
+                  alt=""
+                  width={48}
+                  height={48}
+                  className="preloader-core"
+                  unoptimized
+                />
+              </div>
+              <h2 className="text-lg md:text-xl font-display text-brand">Contacto</h2>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {escort.whatsapp && (
                 <a

@@ -33,12 +33,14 @@ COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
 COPY --from=builder /app/node_modules/bcryptjs ./node_modules/bcryptjs
+COPY --from=builder /app/node_modules/sharp ./node_modules/sharp
+COPY --from=builder /app/node_modules/@img ./node_modules/@img
 COPY --from=builder /app/scripts/seed-safe.js ./scripts/seed-safe.js
 COPY server-wrapper.js ./server-wrapper.js
 # Rename original server.js → server-next.js, put wrapper as server.js
 # so even if Dockploy hard-codes "node server.js" our migrations run first
 RUN mv server.js server-next.js && mv server-wrapper.js server.js
-RUN mkdir -p prisma/data public/uploads && chown -R nextjs:nodejs prisma/data public/uploads
+RUN mkdir -p prisma/data public/uploads public/webp && chown -R nextjs:nodejs prisma/data public/uploads public/webp
 USER nextjs
 EXPOSE 3000
 ENV PORT=3000

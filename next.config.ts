@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
-  serverExternalPackages: ["bcryptjs"],
+  serverExternalPackages: ["bcryptjs", "sharp"],
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },

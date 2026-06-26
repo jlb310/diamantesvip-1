@@ -49,6 +49,9 @@ export async function register() {
           runWebpConversion().catch((e) => console.error('[cron] webp failed:', e))
         })
         console.log('[startup] Scheduled webp conversion cron at 04:00')
+
+        runWebpConversion().catch((e) => console.error('[startup] webp pre-warm failed:', e))
+        console.log('[startup] Webp pre-warm started (background)')
       } catch (e) {
         console.error('[startup] cron schedule failed:', e)
       }

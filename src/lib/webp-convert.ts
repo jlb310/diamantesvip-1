@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { existsSync, mkdirSync } from 'node:fs'
 import { join } from 'node:path'
-import { writeFile, rm } from 'node:fs/promises'
+import { writeFile, readFile, rm } from 'node:fs/promises'
 import { urlToHash } from '@/lib/webp-server'
 
 const WEBP_DIR = join(process.cwd(), 'public', 'webp')
@@ -39,8 +39,6 @@ async function convertOne(url: string): Promise<boolean> {
     await rm(tmpPath, { force: true })
   }
 }
-
-import { readFile } from 'node:fs/promises'
 
 async function processBatch(urls: string[], label: string) {
   let converted = 0

@@ -49,6 +49,7 @@ export function EscortCard({ escort }: EscortCardProps) {
             alt={escort.name}
             fill
             sizes="(max-width: 1024px) 50vw, 25vw"
+            unoptimized
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
         ) : (

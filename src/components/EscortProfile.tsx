@@ -162,6 +162,7 @@ export default function EscortProfilePage({ escort }: { escort: EscortProfile })
                           alt={`Historia ${idx + 1}`}
                           fill
                           sizes="(max-width: 768px) 64px, 80px"
+                          unoptimized
                           className="object-cover"
                         />
                       ) : (
@@ -264,6 +265,7 @@ export default function EscortProfilePage({ escort }: { escort: EscortProfile })
                 alt={`${escort.name} - foto ${photoIdx + 1}`}
                 fill
                 sizes="(max-width: 768px) 100vw, 448px"
+                unoptimized
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
                 priority
               />
@@ -508,6 +510,7 @@ export default function EscortProfilePage({ escort }: { escort: EscortProfile })
                           alt={`Video ${idx + 1}`}
                           fill
                           sizes="(max-width: 640px) 50vw, 33vw"
+                          unoptimized
                           className="object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 flex items-center justify-center bg-black/10">
@@ -532,6 +535,7 @@ export default function EscortProfilePage({ escort }: { escort: EscortProfile })
                           alt={`Foto ${idx + 1}`}
                           fill
                           sizes="(max-width: 640px) 50vw, 33vw"
+                          unoptimized
                           className="object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
@@ -715,6 +719,7 @@ export default function EscortProfilePage({ escort }: { escort: EscortProfile })
                 alt={`${escort.name} ${lightboxIndex + 1}`}
                 fill
                 sizes="(max-width: 768px) 100vw, 80vw"
+                unoptimized
                 className="object-contain"
                 priority
               />

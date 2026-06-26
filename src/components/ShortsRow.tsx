@@ -112,7 +112,7 @@ function ShortCard({ short, isActive }: { short: Short; isActive: boolean }) {
         <div className="flex items-center gap-2">
           {short.escortPhoto && short.escortPhoto.startsWith('http') && (
             <div className="w-7 h-7 rounded-full overflow-hidden border border-border flex-shrink-0 relative">
-              <Image src={webpUrl(short.escortPhoto)} alt={short.escortName} fill sizes="28px" className="object-cover" />
+              <Image src={webpUrl(short.escortPhoto)} alt={short.escortName} fill sizes="28px" unoptimized className="object-cover" />
             </div>
           )}
           <div className="min-w-0">

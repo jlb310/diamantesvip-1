@@ -69,7 +69,7 @@ export default function StatsPage() {
       </Link>
 
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-brand font-serif italic mb-1">Estadísticas</h1>
+        <h1 className="text-3xl font-display text-brand mb-1">Estadísticas</h1>
         <p className="text-muted-light text-sm uppercase tracking-[0.06em]">Resumen general del sitio</p>
       </div>
 
@@ -94,7 +94,7 @@ export default function StatsPage() {
             className={`glass-float rounded-sm p-5 ${c.warn && c.value > 0 ? 'border border-amber-300/60' : ''}`}
           >
             <div
-              className={`text-3xl font-bold font-serif mb-1 ${
+              className={`text-3xl font-display mb-1 ${
                 c.accent ? 'text-accent' : c.warn && c.value > 0 ? 'text-amber-600' : 'text-brand'
               }`}
             >

@@ -65,21 +65,21 @@ export function Header() {
   return (
     <>
       <header
-        className={`bg-surface sticky top-0 z-[70] border-b border-border/10 transition-transform duration-400 ease-out ${
+        className={`bg-white sticky top-0 z-[70] border-b border-border/10 transition-transform duration-400 ease-out ${
           hidden ? '-translate-y-full' : 'translate-y-0'
         }`}
       >
         {/* Top edge gradient accent */}
         <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
 
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 py-2 md:py-3 flex items-center justify-between">
           <Link href="/home" className="flex items-center flex-shrink-0">
             <Image
               src="/logo-extendido.jpeg"
               alt="Diamantes VIP"
               width={160}
               height={64}
-              className="h-16 w-auto"
+              className="h-10 md:h-16 w-auto"
               priority
             />
           </Link>
@@ -123,7 +123,7 @@ export function Header() {
           <div className="md:hidden flex items-center gap-2">
             <button
               onClick={() => setSearchOpen(true)}
-              className="w-10 h-10 flex items-center justify-center text-muted-light hover:text-[#db7581] transition-colors duration-300"
+              className="w-11 h-11 flex items-center justify-center text-muted-light hover:text-[#db7581] transition-colors duration-300"
               aria-label="Buscar"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -133,7 +133,7 @@ export function Header() {
 
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className={`relative flex flex-col justify-center items-center w-10 h-10 gap-1.5 transition-opacity duration-300 ${
+              className={`relative flex flex-col justify-center items-center w-11 h-11 gap-1.5 transition-opacity duration-300 ${
                 menuOpen ? 'z-[70]' : 'z-50'
               }`}
               aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}

@@ -19,7 +19,7 @@ export default function ContactoPage() {
           />
         </div>
 
-        <h1 className="text-3xl md:text-4xl font-bold text-brand font-serif italic mb-3">
+        <h1 className="text-3xl md:text-4xl font-display text-brand mb-3">
           Contáctanos
         </h1>
         <p className="text-muted-light text-sm text-center max-w-sm mb-10">

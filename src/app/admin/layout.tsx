@@ -77,13 +77,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { key: 'fotos', href: '/admin/photos', label: 'Fotos y Videos', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg> },
     { key: 'membresia', href: '/admin/membresia', label: 'Membresía', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> },
     { key: 'historias', href: '/admin/historias', label: 'Historias', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg> },
+    { key: 'visitas', href: '/admin/visitas', label: 'Mis visitas', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg> },
     { key: 'tutorial', href: '/admin/tutorial', label: 'Tutorial', icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg> },
   ]
 
   if (escortId) {
     escortMenuItems.push({
       key: 'publico',
-      href: `/escort/${escortId}`,
+      href: `/diamante/${escortId}`,
       label: 'Perfil público',
       icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>,
     })
@@ -103,7 +104,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 flex-shrink-0">
-            <Link href="/admin" className="text-xl font-bold text-brand font-serif tracking-tight whitespace-nowrap">
+            <Link href="/admin" className="text-xl font-display text-brand tracking-tight whitespace-nowrap">
               Panel<span className="text-accent font-light">VIP</span>
             </Link>
             <span className={`text-[10px] px-2.5 py-0.5 rounded-full font-semibold uppercase tracking-[0.12em] flex-shrink-0 ${isAdmin ? 'bg-brand text-white' : 'bg-accent text-white'}`}>
@@ -144,13 +145,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   <Link href="/admin/historias" className="text-muted-light hover:text-brand transition-colors duration-300 whitespace-nowrap">
                     Historias
                   </Link>
+                  <Link href="/admin/visitas" className="text-muted-light hover:text-brand transition-colors duration-300 whitespace-nowrap">
+                    Mis visitas
+                  </Link>
                   <Link href="/admin/tutorial" className="text-muted-light hover:text-brand transition-colors duration-300 whitespace-nowrap">
                     Tutorial
                   </Link>
                 </>
               )}
               {escortId && (
-                <a href={`/escort/${escortId}`} target="_blank" className="text-accent/70 hover:text-accent transition-colors duration-300 whitespace-nowrap">
+                <a href={`/diamante/${escortId}`} target="_blank" className="text-accent/70 hover:text-accent transition-colors duration-300 whitespace-nowrap">
                   Perfil público ↗
                 </a>
               )}
@@ -238,7 +242,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   key={item.key}
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  target={item.href.startsWith('/escort/') ? '_blank' : undefined}
+                  target={item.href.startsWith('/diamante/') ? '_blank' : undefined}
                   className="flex flex-col items-center justify-center gap-2 aspect-square rounded-xl bg-white border border-[#f9dade] text-[#727272] hover:text-brand hover:bg-[#f9dade]/40 hover:border-[#db7581]/40 transition-all duration-300 p-3 text-center"
                 >
                   <span className="text-[#db7581]">{item.icon}</span>

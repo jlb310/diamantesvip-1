@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { webpUrl } from '@/lib/webp'
 
 interface Photo {
   id: string
@@ -133,7 +134,7 @@ export default function PhotoManager() {
           ← Volver al panel
         </Link>
 
-        <h1 className="text-3xl font-bold text-brand mb-2 font-serif">Gestionar Fotos</h1>
+        <h1 className="text-3xl font-display text-brand mb-2">Gestionar Fotos</h1>
         <p className="text-muted mb-6">{photos.length}/{MAX_PHOTOS} fotos</p>
 
         {message && (
@@ -168,9 +169,10 @@ export default function PhotoManager() {
             {photos.map((photo) => (
               <div key={photo.id} className="relative aspect-square bg-surface-container rounded-none overflow-hidden group border border-border">
                 <Image
-                  src={photo.url}
+                  src={webpUrl(photo.url)}
                   alt=""
                   fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-brand/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">

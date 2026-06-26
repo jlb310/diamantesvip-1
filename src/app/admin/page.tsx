@@ -45,7 +45,7 @@ export default function AdminDashboard() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-6">
       <div className="animate-in mb-6">
-        <h1 className="text-3xl font-bold text-brand font-serif italic mb-1">
+        <h1 className="text-3xl font-display text-brand mb-1">
           {isAdmin ? 'Panel de Administración' : 'Mi Panel'}
         </h1>
         <p className="text-muted-light text-sm uppercase tracking-[0.06em]">
@@ -114,17 +114,17 @@ export default function AdminDashboard() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             </div>
-            <h2 className="text-lg font-bold text-brand font-serif mb-1.5 group-hover:text-accent transition-colors">Diamantes</h2>
+            <h2 className="text-lg font-display text-brand mb-1.5 group-hover:text-accent transition-colors">Diamantes</h2>
             <p className="text-muted-light text-sm">Gestiona perfiles, verificaciones y destacados.</p>
           </Link>
           <Link href="/admin/stats" className="glass-float rounded-sm p-7 group hover:border-accent/30 transition-all duration-400 hover:-translate-y-1">
             <div className="text-4xl mb-4">📊</div>
-            <h2 className="text-lg font-bold text-brand font-serif mb-1.5 group-hover:text-accent transition-colors">Estadísticas</h2>
+            <h2 className="text-lg font-display text-brand mb-1.5 group-hover:text-accent transition-colors">Estadísticas</h2>
             <p className="text-muted-light text-sm">Resumen de perfiles, fotos, videos y aprobaciones.</p>
           </Link>
           <Link href="/admin/config" className="glass-float rounded-sm p-7 group hover:border-accent/30 transition-all duration-400 hover:-translate-y-1">
             <div className="text-4xl mb-4">⚙️</div>
-            <h2 className="text-lg font-bold text-brand font-serif mb-1.5 group-hover:text-accent transition-colors">Configuración</h2>
+            <h2 className="text-lg font-display text-brand mb-1.5 group-hover:text-accent transition-colors">Configuración</h2>
             <p className="text-muted-light text-sm">Datos de contacto del sitio (WhatsApp y correo).</p>
           </Link>
         </div>
@@ -136,7 +136,7 @@ export default function AdminDashboard() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
             </div>
-            <h2 className="text-lg font-bold text-brand font-serif mb-1.5 group-hover:text-accent transition-colors">Editar Perfil</h2>
+            <h2 className="text-lg font-display text-brand mb-1.5 group-hover:text-accent transition-colors">Editar Perfil</h2>
             <p className="text-muted-light text-sm">Nombre, alias, descripción, servicios, medidas, horarios.</p>
           </Link>
 
@@ -146,7 +146,7 @@ export default function AdminDashboard() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
-            <h2 className="text-lg font-bold text-brand font-serif mb-1.5 group-hover:text-accent transition-colors">Fotos y Videos</h2>
+            <h2 className="text-lg font-display text-brand mb-1.5 group-hover:text-accent transition-colors">Fotos y Videos</h2>
             <p className="text-muted-light text-sm">Sube hasta 8 fotos. Selecciona tu foto principal.</p>
           </Link>
 
@@ -156,7 +156,7 @@ export default function AdminDashboard() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
             </div>
-            <h2 className="text-lg font-bold text-brand font-serif mb-1.5 group-hover:text-accent transition-colors">Tutorial</h2>
+            <h2 className="text-lg font-display text-brand mb-1.5 group-hover:text-accent transition-colors">Tutorial</h2>
             <p className="text-muted-light text-sm">Guía paso a paso para completar tu perfil y subir tu material.</p>
           </Link>
 
@@ -166,7 +166,7 @@ export default function AdminDashboard() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h2 className="text-lg font-bold text-brand font-serif mb-1.5 group-hover:text-accent transition-colors">Membresía</h2>
+            <h2 className="text-lg font-display text-brand mb-1.5 group-hover:text-accent transition-colors">Membresía</h2>
             <p className="text-muted-light text-sm">Administra tu suscripción y pagos mensuales.</p>
           </Link>
 
@@ -176,19 +176,19 @@ export default function AdminDashboard() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h2 className="text-lg font-bold text-brand font-serif mb-1.5 group-hover:text-accent transition-colors">Historias</h2>
+            <h2 className="text-lg font-display text-brand mb-1.5 group-hover:text-accent transition-colors">Historias</h2>
             <p className="text-muted-light text-sm">Sube fotos y videos que desaparecen en 24h. Lo más visto del sitio.</p>
           </Link>
 
           {escortId ? (
-            <Link href={`/escort/${escortId}`} target="_blank" className="glass-float rounded-sm p-5 group hover:border-accent/30 transition-all duration-400 hover:-translate-y-1">
+            <Link href={`/diamante/${escortId}`} target="_blank" className="glass-float rounded-sm p-5 group hover:border-accent/30 transition-all duration-400 hover:-translate-y-1">
               <div className="w-10 h-10 bg-accent/10 rounded-sm flex items-center justify-center text-accent mb-4 group-hover:bg-accent group-hover:text-white transition-all duration-400">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
               </div>
-              <h2 className="text-lg font-bold text-brand font-serif mb-1.5 group-hover:text-accent transition-colors">Vista Previa</h2>
+              <h2 className="text-lg font-display text-brand mb-1.5 group-hover:text-accent transition-colors">Vista Previa</h2>
               <p className="text-muted-light text-sm">Así ven tu perfil los clientes. Revisa que todo esté correcto.</p>
             </Link>
           ) : (
@@ -199,7 +199,7 @@ export default function AdminDashboard() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
               </div>
-              <h2 className="text-lg font-bold text-brand font-serif mb-1.5">Vista Previa</h2>
+              <h2 className="text-lg font-display text-brand mb-1.5">Vista Previa</h2>
               <p className="text-muted-light text-sm">Guarda tu perfil primero para ver la vista previa.</p>
             </div>
           )}

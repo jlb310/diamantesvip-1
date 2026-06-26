@@ -43,7 +43,7 @@ function Step({ n, title, children }: { n: number; title: string; children: Reac
         <span className="flex-shrink-0 w-9 h-9 rounded-full bg-accent text-white font-bold flex items-center justify-center font-serif">
           {n}
         </span>
-        <h2 className="text-xl font-bold text-brand font-serif">{title}</h2>
+        <h2 className="text-xl font-display text-brand">{title}</h2>
       </div>
       <div className="text-muted text-sm leading-relaxed space-y-3">{children}</div>
     </div>
@@ -55,7 +55,7 @@ export default function TutorialPage() {
     <div className="max-w-3xl mx-auto px-4 py-8">
       {/* Encabezado */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-brand font-serif italic mb-2">
+        <h1 className="text-3xl font-display text-brand mb-2">
           Cómo subir tu material
         </h1>
         <p className="text-muted-light text-sm">
@@ -128,7 +128,7 @@ export default function TutorialPage() {
 
         {/* RECOMENDACIONES */}
         <div className="glass-luxe rounded-sm p-6 md:p-7">
-          <h2 className="text-xl font-bold text-brand font-serif mb-4">✨ Consejos para mejores resultados</h2>
+          <h2 className="text-xl font-display text-brand mb-4">✨ Consejos para mejores resultados</h2>
           <ul className="list-disc pl-5 space-y-2 text-muted text-sm leading-relaxed">
             <li><strong className="text-brand">Buena luz:</strong> la luz natural junto a una ventana siempre se ve mejor.</li>
             <li><strong className="text-brand">Fotos nítidas y verticales:</strong> evita imágenes borrosas o muy oscuras.</li>

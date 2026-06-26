@@ -43,3 +43,6 @@ next-env.d.ts
 # wp-backup (keep for reference)
 *.wpress
 /src/generated/prisma
+
+# webp generadas por cron (se regeneran en runtime)
+/public/webp/

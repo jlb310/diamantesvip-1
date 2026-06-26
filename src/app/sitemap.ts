@@ -30,7 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]
 
   const escortRoutes: MetadataRoute.Sitemap = escorts.map((escort) => ({
-    url: `${baseUrl}/escort/${escort.id}`,
+    url: `${baseUrl}/diamante/${escort.id}`,
     lastModified: escort.updatedAt,
     changeFrequency: 'daily',
     priority: 0.9,

@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { webpUrl } from '@/lib/webp'
 
 interface EscortItem {
   id: string
@@ -102,7 +103,7 @@ export default function EscortsManager() {
   const Avatar = ({ escort }: { escort: EscortItem }) => (
     <div className="w-14 h-14 rounded-sm bg-surface-container overflow-hidden flex-shrink-0 relative">
       {escort.mainPhoto && escort.mainPhoto.startsWith('http') ? (
-        <Image src={escort.mainPhoto} alt={escort.name} fill className="object-cover" />
+        <Image src={webpUrl(escort.mainPhoto)} alt={escort.name} fill sizes="56px" className="object-cover" />
       ) : (
         <div className="w-full h-full flex items-center justify-center text-2xl">💎</div>
       )}
@@ -112,7 +113,7 @@ export default function EscortsManager() {
   const InfoLine = ({ escort }: { escort: EscortItem }) => (
     <div className="flex-1 min-w-0">
       <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-        <h3 className="text-base font-semibold text-brand font-serif">{escort.alias || escort.name}</h3>
+        <h3 className="text-base font-semibold text-brand font-display">{escort.alias || escort.name}</h3>
         <span className="text-xs text-muted-light">({escort.age} años)</span>
         {statusBadge(escort.status)}
       </div>
@@ -145,7 +146,7 @@ export default function EscortsManager() {
       <div className="animate-in mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-brand font-serif italic mb-1">Gestión de Diamantes</h1>
+            <h1 className="text-3xl font-display text-brand mb-1">Gestión de Diamantes</h1>
             <p className="text-muted-light text-sm uppercase tracking-[0.06em]">
               {escorts.length} perfiles registrados
             </p>
@@ -173,7 +174,7 @@ export default function EscortsManager() {
                 <InfoLine escort={escort} />
                 <div className="flex items-center gap-2 flex-shrink-0">
                   <Link
-                    href={`/escort/${escort.id}`}
+                    href={`/diamante/${escort.id}`}
                     target="_blank"
                     className="px-3 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-[0.08em] bg-surface-container text-muted hover:bg-surface-dim transition-all"
                   >
@@ -261,7 +262,7 @@ export default function EscortsManager() {
               </button>
 
               <Link
-                href={`/escort/${escort.id}`}
+                href={`/diamante/${escort.id}`}
                 target="_blank"
                 className="text-muted-light hover:text-accent transition-colors text-xs"
               >

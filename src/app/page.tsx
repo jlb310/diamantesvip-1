@@ -40,7 +40,7 @@ export default function LandingPage() {
           />
           <p
             className="text-center text-white/95 text-3xl italic tracking-wide"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            style={{ fontFamily: 'Parisienne, cursive' }}
           >
             Pronto...
           </p>

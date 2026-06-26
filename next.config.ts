@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "node:path";
 
 const nextConfig: NextConfig = {
   output: "standalone",
@@ -11,9 +12,12 @@ const nextConfig: NextConfig = {
     ],
     formats: ["image/avif", "image/webp"],
   },
+  turbopack: {
+    root: path.resolve(__dirname),
+  },
+  serverExternalPackages: ["bcryptjs"],
   experimental: {
     optimizePackageImports: ["lucide-react"],
-    serverComponentsExternalPackages: ["bcryptjs"],
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["error", "warn"] } : false,

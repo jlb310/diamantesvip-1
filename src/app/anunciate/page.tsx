@@ -182,7 +182,7 @@ export default function AnunciatePage() {
       <section className="relative pt-12 pb-24 px-4">
         <div className="absolute inset-0 bg-gradient-to-b from-rose/20 via-transparent to-transparent" />
         <div className="max-w-4xl mx-auto text-center relative animate-in">
-          <h1 className="text-4xl md:text-5xl font-bold text-brand font-serif italic mb-6">
+          <h1 className="text-4xl md:text-5xl font-display text-brand mb-6">
             Anúnciate
           </h1>
           <div className="mb-6 flex justify-center">
@@ -199,7 +199,7 @@ export default function AnunciatePage() {
             El directorio de acompañantes más exclusivo de Chile. Crea tu perfil,
             sube tus fotos y conecta con clientes de alto nivel.
           </p>
-          <div className="flex items-center justify-center gap-4 mt-10">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10">
             <a
               href="#register"
               className="text-white font-semibold px-8 py-4 rounded-sm transition-all hover:scale-105 text-sm uppercase tracking-[0.15em] hover:shadow-lg"
@@ -223,9 +223,9 @@ export default function AnunciatePage() {
       </section>
 
       {/* Benefits */}
-      <section className="py-20 px-4" style={{ backgroundColor: '#f9dade' }}>
+      <section className="py-12 md:py-20 px-4" style={{ backgroundColor: '#f9dade' }}>
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-3 font-serif italic" style={{ color: '#727272' }}>
+          <h2 className="text-3xl font-display text-center mb-3" style={{ color: '#727272' }}>
             ¿Por qué anunciarte con nosotros?
           </h2>
           <p className="text-center mb-14 max-w-xl mx-auto text-sm uppercase tracking-[0.08em]" style={{ color: '#8c8484' }}>
@@ -241,7 +241,7 @@ export default function AnunciatePage() {
                   style={{ backgroundColor: '#f9dade', color: '#db7581' }}>
                   {benefit.icon}
                 </div>
-                <h3 className="text-base font-semibold mb-2 font-serif" style={{ color: '#727272' }}>{benefit.title}</h3>
+                <h3 className="text-base font-semibold mb-2 font-display" style={{ color: '#727272' }}>{benefit.title}</h3>
                 <p className="text-sm leading-relaxed" style={{ color: '#8c8484' }}>{benefit.description}</p>
               </div>
             ))}
@@ -250,9 +250,9 @@ export default function AnunciatePage() {
       </section>
 
       {/* Plans */}
-      <section id="plans" className="py-20 px-4">
+      <section id="plans" className="py-12 md:py-20 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-3 font-serif text-brand italic">Planes</h2>
+          <h2 className="text-3xl font-display text-center mb-3 text-brand">Planes</h2>
           <p className="text-muted-light text-center mb-14 text-sm uppercase tracking-[0.08em]">
             Elige el que mejor se adapte a ti
           </p>
@@ -272,9 +272,9 @@ export default function AnunciatePage() {
                     Recomendado
                   </div>
                 )}
-                <h3 className="text-xl font-bold mb-2 font-serif text-center" style={{ color: '#727272' }}>{plan.name}</h3>
+                <h3 className="text-xl font-display mb-2 text-center" style={{ color: '#727272' }}>{plan.name}</h3>
                 <div className="mb-6 text-center">
-                  <span className="text-3xl font-bold font-serif" style={{ color: '#db7581' }}>{plan.price}</span>
+                  <span className="text-3xl font-display" style={{ color: '#db7581' }}>{plan.price}</span>
                   {plan.period && (
                     <span className="text-muted-light text-sm ml-1">{plan.period}</span>
                   )}
@@ -306,9 +306,9 @@ export default function AnunciatePage() {
       </section>
 
       {/* How it works */}
-      <section className="py-20 px-4" style={{ backgroundColor: '#f9dade' }}>
+      <section className="py-12 md:py-20 px-4" style={{ backgroundColor: '#f9dade' }}>
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-3 font-serif italic" style={{ color: '#727272' }}>
+          <h2 className="text-3xl font-display text-center mb-3" style={{ color: '#727272' }}>
             ¿Cómo funciona?
           </h2>
           <p className="text-center mb-14 max-w-xl mx-auto text-sm uppercase tracking-[0.08em]" style={{ color: '#8c8484' }}>
@@ -348,9 +348,9 @@ export default function AnunciatePage() {
       </section>
 
       {/* Register form */}
-      <section id="register" className="py-20 px-4">
+      <section id="register" className="py-12 md:py-20 px-4">
         <div className="max-w-lg mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-2 font-serif text-brand italic">Crea tu cuenta</h2>
+          <h2 className="text-3xl font-display text-center mb-2 text-brand">Crea tu cuenta</h2>
           <p className="text-muted-light text-center mb-8 text-sm uppercase tracking-[0.08em]">
             Empieza a recibir contactos hoy
           </p>
@@ -444,7 +444,7 @@ export default function AnunciatePage() {
       {/* Footer CTA */}
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-2xl font-bold text-brand font-serif italic mb-3">¿Tienes dudas?</h2>
+          <h2 className="text-2xl font-display text-brand mb-3">¿Tienes dudas?</h2>
           <p className="text-muted-light mb-8 text-sm">
             Escríbenos por WhatsApp y te ayudamos a crear tu perfil
           </p>

@@ -1,19 +1,18 @@
 import type { Metadata } from "next"
-import { Public_Sans, Cormorant_Garamond } from "next/font/google"
+import { Raleway, Parisienne } from "next/font/google"
 import "./globals.css"
 import { SiteChrome } from "@/components/SiteChrome"
 
-const publicSans = Public_Sans({
-  variable: "--font-public-sans",
+const raleway = Raleway({
+  variable: "--font-raleway",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
 })
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const parisienne = Parisienne({
+  variable: "--font-parisienne",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  weight: ["400"],
 })
 
 export const metadata: Metadata = {
@@ -88,7 +87,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={`${publicSans.variable} ${cormorant.variable} h-full antialiased`}>
+    <html lang="es" className={`${raleway.variable} ${parisienne.variable} h-full antialiased`}>
       <head>
         <meta name="theme-color" content="#F8E4E8" />
         <meta name="apple-mobile-web-app-capable" content="yes" />

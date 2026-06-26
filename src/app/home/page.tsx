@@ -169,18 +169,18 @@ export default async function Home({ searchParams }: HomeProps) {
         <HeroVideo />
         <StoriesRow escorts={storyEscorts} />
 
-        <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="max-w-7xl mx-auto px-4 py-6 md:py-12">
           {escorts.length === 0 ? (
             <div className="text-center py-20">
               <div className="glass-card inline-block rounded-sm p-10">
-                <p className="text-2xl text-muted-light font-serif italic mb-2">Sin resultados</p>
+                <p className="text-2xl text-muted-light font-display mb-2">Sin resultados</p>
                 <p className="text-muted-light text-sm">Intenta con otros filtros</p>
               </div>
             </div>
           ) : activeTier ? (
             <Section tier={activeTier} escorts={escorts} />
           ) : hasSearch ? (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-1.5 stagger">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 stagger">
               {escorts.map((escort) => (
                 <EscortCard key={escort.id} escort={escort} />
               ))}
@@ -255,7 +255,7 @@ function Section({
     <div>
       <div className="flex items-center gap-3 mb-5">
         <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
-        <h2 className="text-xl md:text-2xl font-bold font-serif italic" style={{ color }}>
+        <h2 className="text-xl md:text-2xl font-display" style={{ color }}>
           {label}
         </h2>
         <span className="text-xs text-muted-light">({escorts.length})</span>

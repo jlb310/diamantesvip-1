@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import Image from 'next/image'
+import { webpUrl } from '@/lib/webp'
 
 interface Short {
   id: string
@@ -50,7 +51,7 @@ function ShortCard({ short, isActive }: { short: Short; isActive: boolean }) {
     }
   }
 
-  const posterUrl = short.thumbnail || short.escortPhoto || undefined
+  const posterUrl = webpUrl(short.thumbnail || short.escortPhoto || undefined) || undefined
 
   return (
     <div className="relative aspect-[9/16] flex-shrink-0 rounded-sm overflow-hidden bg-surface-container border border-border group" style={{ width: CARD_WIDTH }}>
@@ -100,7 +101,7 @@ function ShortCard({ short, isActive }: { short: Short; isActive: boolean }) {
         </div>
       )}
 
-      <button onClick={(e) => { e.stopPropagation(); setMuted(!muted) }} className="absolute top-3 right-3 z-20 glass-dark rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+      <button onClick={(e) => { e.stopPropagation(); setMuted(!muted) }} className="absolute top-3 right-3 z-20 glass-dark rounded-full p-2.5 opacity-60 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
         {muted ? (
           <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" /></svg>
         ) : (
@@ -111,7 +112,7 @@ function ShortCard({ short, isActive }: { short: Short; isActive: boolean }) {
         <div className="flex items-center gap-2">
           {short.escortPhoto && short.escortPhoto.startsWith('http') && (
             <div className="w-7 h-7 rounded-full overflow-hidden border border-border flex-shrink-0 relative">
-              <Image src={short.escortPhoto} alt={short.escortName} fill className="object-cover" />
+              <Image src={webpUrl(short.escortPhoto)} alt={short.escortName} fill sizes="28px" className="object-cover" />
             </div>
           )}
           <div className="min-w-0">

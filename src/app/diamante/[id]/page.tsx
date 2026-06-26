@@ -1,5 +1,8 @@
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
+import { after } from 'next/server'
+import { headers } from 'next/headers'
+import { createHash } from 'node:crypto'
 import EscortProfilePage from '@/components/EscortProfile'
 import type { Metadata } from 'next'
 
@@ -45,11 +48,11 @@ export async function generateMetadata({
     title,
     description,
     keywords: ['Diamante', 'Diamantes', escort.city, profileName],
-    alternates: { canonical: `/escort/${id}` },
+    alternates: { canonical: `/diamante/${id}` },
     openGraph: {
       title,
       description,
-      url: `/escort/${id}`,
+      url: `/diamante/${id}`,
       type: 'profile',
     },
   }
@@ -66,6 +69,24 @@ export default async function ProfilePage({
   if (!escort) {
     notFound()
   }
+
+  const h = await headers()
+  const forwarded = h.get('x-forwarded-for')
+  const ip = forwarded?.split(',')[0]?.trim()
+  const ipHash = ip
+    ? createHash('sha256').update(ip + (process.env.AUTH_SECRET || '')).digest('hex').slice(0, 16)
+    : null
+  const referer = h.get('referer') || null
+
+  after(async () => {
+    try {
+      await prisma.profileVisit.create({
+        data: { escortId: escort.id, ipHash, referer },
+      })
+    } catch (e) {
+      console.error('[visit] track failed:', e)
+    }
+  })
 
   return <EscortProfilePage escort={escort} />
 }

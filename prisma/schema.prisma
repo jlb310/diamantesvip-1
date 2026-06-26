@@ -67,6 +67,18 @@ model Escort {
   videos    Video[]
   reviews   Review[]
   subscriptions Subscription[]
+  visits    ProfileVisit[]
+}
+
+model ProfileVisit {
+  id        String   @id @default(cuid())
+  escortId  String
+  escort    Escort   @relation(fields: [escortId], references: [id], onDelete: Cascade)
+  ipHash    String?
+  referer   String?
+  createdAt DateTime @default(now())
+
+  @@index([escortId, createdAt])
 }
 
 model Photo {

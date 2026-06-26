@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { webpUrl } from '@/lib/webp'
 
 interface EscortCardProps {
   escort: {
@@ -38,15 +39,16 @@ export function EscortCard({ escort }: EscortCardProps) {
 
   return (
     <Link
-      href={`/escort/${escort.id}`}
+      href={`/diamante/${escort.id}`}
       className="group block glass-float rounded-sm overflow-hidden"
     >
       <div className="aspect-[2/3] relative bg-surface-container overflow-hidden">
         {escort.mainPhoto && escort.mainPhoto.startsWith('http') ? (
           <Image
-            src={escort.mainPhoto}
+            src={webpUrl(escort.mainPhoto)}
             alt={escort.name}
             fill
+            sizes="(max-width: 1024px) 50vw, 25vw"
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
         ) : (
@@ -61,7 +63,7 @@ export function EscortCard({ escort }: EscortCardProps) {
         {/* Tier badge — top left */}
         <div className="absolute top-3 left-3 z-10">
           <span
-            className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-[0.12em]"
+            className="text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-[0.12em]"
             style={{ backgroundColor: tierStyle.bg, color: tierStyle.text }}
           >
             {tierStyle.label}
@@ -81,7 +83,7 @@ export function EscortCard({ escort }: EscortCardProps) {
         <div className="absolute bottom-0 left-0 right-0 p-3.5 z-10">
           <div className="flex items-end justify-between gap-2">
             <div className="min-w-0">
-              <h3 className="text-white text-base md:text-lg font-bold font-serif capitalize drop-shadow-lg truncate leading-tight">
+              <h3 className="text-white text-sm md:text-lg font-bold font-serif capitalize drop-shadow-lg leading-tight line-clamp-1">
                 {escort.alias || escort.name}
               </h3>
               <div className="flex items-center gap-1.5 mt-0.5">

@@ -173,7 +173,7 @@ export function StoryViewer({ escorts, initialIndex, onClose }: StoryViewerProps
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-black">
+    <div className="fixed inset-0 z-[80] bg-black">
       {/* Progress bars */}
       <div className="absolute top-0 left-0 right-0 z-20 flex gap-1 px-2 pt-4 pb-2 glass-dark/50">
         {currentEscort.videos.map((_, i) => (

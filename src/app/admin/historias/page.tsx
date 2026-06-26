@@ -67,7 +67,7 @@ export default function HistoriasManager() {
       </Link>
 
       <div className="animate-in">
-        <h1 className="text-3xl font-bold text-brand font-serif italic mb-1">Historias</h1>
+        <h1 className="text-3xl font-display text-brand mb-1">Historias</h1>
         <p className="text-muted-light text-sm uppercase tracking-[0.06em] mb-8">
           Sube fotos y videos temporales. Desaparecen en 24 horas.
         </p>
@@ -85,7 +85,7 @@ export default function HistoriasManager() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <h2 className="text-xl font-bold text-brand font-serif mb-2">Subir Historia</h2>
+        <h2 className="text-xl font-display text-brand mb-2">Subir Historia</h2>
         <p className="text-muted-light text-sm mb-6">Máximo {MAX_STORIES} historias. Formatos: JPG, PNG, MP4.</p>
 
         <input

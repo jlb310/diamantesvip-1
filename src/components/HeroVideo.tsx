@@ -17,7 +17,7 @@ export function HeroVideo() {
       {/* Centered content */}
       <div className="relative z-10 text-center px-4">
         <h1 className="text-3xl md:text-5xl font-bold text-white font-serif italic tracking-wide mb-3 drop-shadow-lg">
-          Diamantes VIP
+          Diamantes Vip
         </h1>
         <p className="text-white/90 text-base md:text-lg font-light tracking-wider max-w-xl mx-auto drop-shadow-md">
           El directorio más exclusivo de acompañantes en Chile

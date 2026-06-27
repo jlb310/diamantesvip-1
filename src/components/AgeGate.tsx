@@ -11,13 +11,18 @@ export function AgeGate() {
   useEffect(() => {
     const hasCookie = document.cookie
       .split('; ')
-      .some((c) => c.startsWith('age-verified=true'))
+      .some((c) => c.startsWith('age-gate-dismissed=true'))
     setVerified(hasCookie)
   }, [])
 
-  const handleVerify = () => {
+  const handleVerify = async () => {
+    try {
+      await fetch('/api/age-verify', { method: 'POST' })
+    } catch (e) {
+      console.error('age-verify failed:', e)
+    }
     const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString()
-    document.cookie = `age-verified=true; path=/; expires=${expires}; SameSite=Lax`
+    document.cookie = `age-gate-dismissed=true; path=/; expires=${expires}; SameSite=Lax`
     setVerified(true)
   }
 

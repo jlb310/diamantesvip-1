@@ -1,20 +1,23 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 RUN apk add --no-cache openssl
-COPY package.json package-lock.json ./
-RUN npm ci
+RUN corepack enable pnpm
+COPY package.json pnpm-lock.yaml .npmrc ./
+RUN pnpm install --frozen-lockfile
 
 FROM node:20-alpine AS builder
 WORKDIR /app
 RUN apk add --no-cache openssl
+RUN corepack enable pnpm
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+COPY .npmrc pnpm-lock.yaml ./
 # Genera el cliente Prisma, crea la DB con schema y seed, y builda la app.
 RUN mkdir -p prisma/data && \
-    npx prisma generate && \
-    DATABASE_URL="file:/app/prisma/data/dev.db" npx prisma db push --skip-generate && \
+    pnpm exec prisma generate && \
+    DATABASE_URL="file:/app/prisma/data/dev.db" pnpm exec prisma db push --skip-generate && \
     SEED_ON_PRODUCTION=true DATABASE_URL="file:/app/prisma/data/dev.db" node scripts/seed-safe.js && \
-    npm run build
+    pnpm run build
 
 # bust cache so mv wrapper always runs: v4
 FROM node:20-alpine AS runner

@@ -2,7 +2,7 @@ FROM node:22-alpine AS deps
 WORKDIR /app
 RUN apk add --no-cache openssl
 RUN corepack enable pnpm
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+COPY package.json pnpm-lock.yaml .npmrc ./
 RUN pnpm install --frozen-lockfile
 
 FROM node:22-alpine AS builder
@@ -11,7 +11,7 @@ RUN apk add --no-cache openssl
 RUN corepack enable pnpm
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-COPY .npmrc pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY .npmrc pnpm-lock.yaml ./
 # Genera el cliente Prisma, crea la DB con schema y seed, y builda la app.
 RUN mkdir -p prisma/data && \
     pnpm exec prisma generate && \

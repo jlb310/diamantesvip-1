@@ -16,7 +16,6 @@ export async function POST(req: NextRequest) {
     if (!payload) {
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 })
     }
-    const escortId = payload.id
 
     if (!isFlowConfigured()) {
       return NextResponse.json({ error: 'Flow.cl no está configurado' }, { status: 500 })
@@ -29,15 +28,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Falta planId' }, { status: 400 })
     }
 
-    // Get escort and plan info
-    const escort = await prisma.escort.findUnique({
-      where: { id: escortId },
+    // Get escort by userId, NOT by payload.id (which is User.id)
+    const escort = await prisma.escort.findFirst({
+      where: { userId: payload.id },
       include: { user: true },
     })
 
     if (!escort) {
       return NextResponse.json({ error: 'Diamante no encontrada' }, { status: 404 })
     }
+
+    const escortId = escort.id
 
     const plan = await prisma.membershipPlan.findUnique({
       where: { id: planId },
@@ -95,7 +96,7 @@ export async function POST(req: NextRequest) {
     })
   } catch (error: any) {
     console.error('Subscribe error:', error)
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ error: 'Error interno' }, { status: 500 })
   }
 }
 
@@ -111,20 +112,26 @@ export async function GET(req: NextRequest) {
     if (!payload) {
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 })
     }
-    const escortId = payload.id
 
-    const subscription = await prisma.subscription.findFirst({
-      where: { escortId },
-      include: { plan: true, payments: { orderBy: { createdAt: 'desc' }, take: 5 } },
-      orderBy: { createdAt: 'desc' },
+    const escort = await prisma.escort.findFirst({
+      where: { userId: payload.id },
+      select: { id: true },
     })
+
+    const subscription = escort
+      ? await prisma.subscription.findFirst({
+          where: { escortId: escort.id },
+          include: { plan: true, payments: { orderBy: { createdAt: 'desc' }, take: 5 } },
+          orderBy: { createdAt: 'desc' },
+        })
+      : null
 
     const plans = await prisma.membershipPlan.findMany({
       where: { active: true },
     })
 
     return NextResponse.json({ subscription, plans })
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+  } catch {
+    return NextResponse.json({ error: 'Error interno' }, { status: 500 })
   }
 }

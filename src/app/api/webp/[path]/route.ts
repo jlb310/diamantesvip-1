@@ -8,6 +8,22 @@ const WEBP_DIR = join(process.cwd(), 'public', 'webp')
 const MAX_WIDTH = 1200
 const QUALITY = 80
 
+const ALLOWED_HOSTS = [
+  'cdn.shopify.com',
+  'videos.pexels.com',
+  'images.pexels.com',
+]
+
+function isAllowedUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url)
+    if (parsed.protocol !== 'https:') return false
+    return ALLOWED_HOSTS.some((h) => parsed.hostname === h || parsed.hostname.endsWith('.' + h))
+  } catch {
+    return false
+  }
+}
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ path: string }> }
@@ -21,8 +37,8 @@ export async function GET(
     return new NextResponse('Bad request', { status: 400 })
   }
 
-  if (!originalUrl.startsWith('http')) {
-    return new NextResponse('Bad request', { status: 400 })
+  if (!isAllowedUrl(originalUrl)) {
+    return new NextResponse('Forbidden', { status: 403 })
   }
 
   const localPath = webpLocalPath(originalUrl)

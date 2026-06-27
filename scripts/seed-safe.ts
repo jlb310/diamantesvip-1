@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import bcryptjs from 'bcryptjs'
+import { randomUUID } from 'crypto'
 
 const prisma = new PrismaClient()
 
@@ -842,6 +843,11 @@ const reviewsData = [
 ]
 
 async function main() {
+  if (process.env.NODE_ENV === 'production' && process.env.SEED_ON_PRODUCTION !== 'true') {
+    console.log('⏭️  Seed saltado: NODE_ENV=production (usar SEED_ON_PRODUCTION=true para forzar)')
+    return
+  }
+
   console.log('🌱 Iniciando seed SEGURO (sin borrar datos)...')
 
   let created = 0
@@ -851,7 +857,8 @@ async function main() {
   // Create admin if not exists
   const existingAdmin = await prisma.user.findUnique({ where: { email: 'admin@diamantes.vip' } })
   if (!existingAdmin) {
-    const adminHashed = await bcryptjs.hash('admin123', 10)
+    const adminPassword = process.env.ADMIN_PASSWORD || (process.env.NODE_ENV === 'production' ? randomUUID() : 'admin123')
+    const adminHashed = await bcryptjs.hash(adminPassword, 10)
     await prisma.user.create({
       data: {
         email: 'admin@diamantes.vip',
@@ -859,7 +866,12 @@ async function main() {
         role: 'admin',
       },
     })
-    console.log('✅ Admin creado: admin@diamantes.vip / admin123')
+    if (process.env.NODE_ENV === 'production') {
+      console.log('✅ Admin creado: admin@diamantes.vip / [password aleatoria — ver logs del build]')
+      console.log(`   Admin password: ${adminPassword}`)
+    } else {
+      console.log('✅ Admin creado: admin@diamantes.vip / admin123')
+    }
   } else {
     console.log('⏭️ Admin ya existe, saltando...')
   }

@@ -2,7 +2,13 @@ import { sign, verify } from 'jsonwebtoken'
 import { compare, hash } from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
 
-const JWT_SECRET = process.env.AUTH_SECRET || 'fallback-secret'
+const JWT_SECRET = process.env.AUTH_SECRET
+
+if (!JWT_SECRET && process.env.NODE_ENV === 'production') {
+  throw new Error('AUTH_SECRET environment variable is required in production')
+}
+
+const SECRET = JWT_SECRET || 'dev-only-not-for-production'
 
 export async function hashPassword(password: string): Promise<string> {
   return hash(password, 10)
@@ -13,12 +19,12 @@ export async function verifyPassword(password: string, hash: string): Promise<bo
 }
 
 export function createToken(payload: object): string {
-  return sign(payload, JWT_SECRET, { expiresIn: '7d' })
+  return sign(payload, SECRET, { expiresIn: '7d' })
 }
 
 export function verifyToken(token: string): any {
   try {
-    return verify(token, JWT_SECRET)
+    return verify(token, SECRET)
   } catch {
     return null
   }

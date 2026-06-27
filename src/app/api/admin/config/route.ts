@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ config })
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ error: "Error interno" }, { status: 500 })
   }
 }
 
@@ -58,6 +58,6 @@ export async function PUT(req: NextRequest) {
 
     return NextResponse.json({ success: true, config })
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ error: "Error interno" }, { status: 500 })
   }
 }

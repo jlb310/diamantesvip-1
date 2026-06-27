@@ -3,6 +3,8 @@
  * Flow API docs: https://www.flow.cl/docs/api.html
  */
 
+import { timingSafeEqual } from 'node:crypto'
+
 const FLOW_API_URL = 'https://www.flow.cl/api'
 const FLOW_API_KEY = process.env.FLOW_API_KEY || ''
 const FLOW_SECRET_KEY = process.env.FLOW_SECRET_KEY || ''
@@ -169,7 +171,13 @@ export function flowVerifyWebhook(params: Record<string, string>): boolean {
     }
   }
   const computedSign = flowSign(paramsToSign)
-  return receivedSign === computedSign
+  try {
+    const a = Buffer.from(receivedSign, 'hex')
+    const b = Buffer.from(computedSign, 'hex')
+    return a.length === b.length && timingSafeEqual(a, b)
+  } catch {
+    return false
+  }
 }
 
 /**

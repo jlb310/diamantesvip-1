@@ -5,10 +5,9 @@ const nextConfig: NextConfig = {
   output: "standalone",
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**",
-      },
+      { protocol: "https", hostname: "cdn.shopify.com" },
+      { protocol: "https", hostname: "videos.pexels.com" },
+      { protocol: "https", hostname: "images.pexels.com" },
     ],
     formats: ["image/avif", "image/webp"],
   },

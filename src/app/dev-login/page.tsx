@@ -9,6 +9,10 @@ function DevLoginContent() {
   const role = searchParams.get('role') || 'escort'
 
   useEffect(() => {
+    if (process.env.NODE_ENV === 'production') {
+      router.push('/')
+      return
+    }
     fetch(`/api/dev/login?role=${role}`)
       .then((r) => r.json())
       .then((data) => {

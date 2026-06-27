@@ -43,6 +43,6 @@ export async function GET(req: NextRequest) {
       stats: { total, approved, pending, rejected, active, verified, featured, photos, videos, reviews },
     })
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ error: "Error interno" }, { status: 500 })
   }
 }

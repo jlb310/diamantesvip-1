@@ -1,0 +1,9 @@
+.env
+.env*.local
+*.db
+*.db-journal
+.git
+.next
+.playwright-mcp
+public/uploads
+prisma/data

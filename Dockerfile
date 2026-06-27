@@ -13,7 +13,7 @@ COPY . .
 RUN mkdir -p prisma/data && \
     npx prisma generate && \
     DATABASE_URL="file:/app/prisma/data/dev.db" npx prisma db push --skip-generate && \
-    DATABASE_URL="file:/app/prisma/data/dev.db" node scripts/seed-safe.js && \
+    SEED_ON_PRODUCTION=true DATABASE_URL="file:/app/prisma/data/dev.db" node scripts/seed-safe.js && \
     npm run build
 
 # bust cache so mv wrapper always runs: v4

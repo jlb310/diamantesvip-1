@@ -186,12 +186,12 @@ export default function EscortProfilePage({ escort }: { escort: EscortProfile })
           </div>
         )}
 
-        {/* Desktop: galería izquierda + info derecha | Mobile: apilado */}
-        <div className="md:flex md:gap-6 md:items-start mb-6">
+        {/* Perfil: foto + info al lado (mobile y desktop) */}
+        <div className="flex gap-4 md:gap-6 items-start mb-6">
           {/* Izquierda: Carrusel de fotos */}
-          <div className="md:w-[400px] md:flex-shrink-0 mb-6 md:mb-0 md:sticky md:top-4">
+          <div className="w-[150px] sm:w-[220px] md:w-[400px] flex-shrink-0 md:sticky md:top-4">
             <div
-              className="relative aspect-[3/4] bg-surface-container rounded-[24px] overflow-hidden cursor-pointer group max-w-md mx-auto md:mx-0"
+              className="relative aspect-[3/4] bg-surface-container rounded-[16px] md:rounded-[24px] overflow-hidden cursor-pointer group md:max-w-md md:mx-0"
               onClick={() => openLightbox(photoToMediaIdx(photoIdx))}
             >
               {profilePhotos.length > 0 && profilePhotos[photoIdx] ? (
@@ -216,32 +216,32 @@ export default function EscortProfilePage({ escort }: { escort: EscortProfile })
                 <>
                   <button
                     onClick={(e) => { e.stopPropagation(); prevPhoto() }}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 glass-strong text-brand p-2.5 rounded-full z-10 opacity-80 hover:opacity-100 transition-opacity"
+                    className="absolute left-1.5 top-1/2 -translate-y-1/2 glass-strong text-brand p-1.5 md:p-2.5 rounded-full z-10 opacity-80 hover:opacity-100 transition-opacity"
                     aria-label="Foto anterior"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
                   </button>
                   <button
                     onClick={(e) => { e.stopPropagation(); nextPhoto() }}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 glass-strong text-brand p-2.5 rounded-full z-10 opacity-80 hover:opacity-100 transition-opacity"
+                    className="absolute right-1.5 top-1/2 -translate-y-1/2 glass-strong text-brand p-1.5 md:p-2.5 rounded-full z-10 opacity-80 hover:opacity-100 transition-opacity"
                     aria-label="Foto siguiente"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </button>
 
-                  <div className="absolute top-3 left-1/2 -translate-x-1/2 glass-strong text-brand text-xs px-2.5 py-1 rounded-full z-10">
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 glass-strong text-brand text-[10px] md:text-xs px-2 md:px-2.5 py-0.5 md:py-1 rounded-full z-10">
                     {photoIdx + 1} / {profilePhotos.length}
                   </div>
-                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                  <div className="absolute bottom-2 md:bottom-3 left-1/2 -translate-x-1/2 flex gap-1 md:gap-1.5 z-10">
                     {profilePhotos.map((_, i) => (
                       <button
                         key={i}
                         onClick={(e) => { e.stopPropagation(); setPhotoIdx(i) }}
-                        className={`h-1.5 rounded-full transition-all ${i === photoIdx ? 'w-5 bg-white' : 'w-1.5 bg-white/60'}`}
+                        className={`h-1.5 rounded-full transition-all ${i === photoIdx ? 'w-4 md:w-5 bg-white' : 'w-1.5 bg-white/60'}`}
                         aria-label={`Ir a foto ${i + 1}`}
                       />
                     ))}
@@ -249,7 +249,7 @@ export default function EscortProfilePage({ escort }: { escort: EscortProfile })
                 </>
               )}
 
-              <div className="absolute bottom-4 right-4 glass-strong text-brand px-3 py-1.5 rounded-lg text-sm flex items-center gap-1.5 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+              <div className="hidden md:flex absolute bottom-4 right-4 glass-strong text-brand px-3 py-1.5 rounded-lg text-sm items-center gap-1.5 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                 </svg>
@@ -259,11 +259,11 @@ export default function EscortProfilePage({ escort }: { escort: EscortProfile })
           </div>
 
           {/* Derecha: Nombre + datos + nacionalidad + sobre mí */}
-          <div className="flex-1 space-y-5">
+          <div className="flex-1 min-w-0 space-y-3 md:space-y-5">
             {/* Nombre + Info resumida */}
-            <div className="glass-card border border-border rounded-[24px] p-4 md:p-5">
+            <div className="glass-card border border-border rounded-[20px] md:rounded-[24px] p-3 md:p-5">
               <div className="flex items-center gap-2 flex-wrap mb-3">
-                <h1 className="text-2xl md:text-3xl font-display text-brand capitalize tracking-tight">
+                <h1 className="text-xl md:text-3xl font-display text-brand capitalize tracking-tight">
                   {escort.alias || escort.name}
                 </h1>
                 {escort.verified && (
@@ -360,8 +360,8 @@ export default function EscortProfilePage({ escort }: { escort: EscortProfile })
 
             {/* Sobre Mí */}
             {escort.description && (
-              <div className="glass-card bg-surface-alt/50 border border-border rounded-[24px] p-4 md:p-6">
-                <h2 className="text-xl md:text-2xl font-display text-brand mb-4">Sobre Mí</h2>
+              <div className="glass-card bg-surface-alt/50 border border-border rounded-[20px] md:rounded-[24px] p-3 md:p-6">
+                <h2 className="text-lg md:text-2xl font-display text-brand mb-3 md:mb-4">Sobre Mí</h2>
                 <p className="text-muted leading-relaxed text-sm md:text-base whitespace-pre-line">
                   {escort.description}
                 </p>
@@ -399,18 +399,10 @@ export default function EscortProfilePage({ escort }: { escort: EscortProfile })
         {(escort.whatsapp || escort.phone) && (
           <div className="glass-card border border-border rounded-[24px] p-4 md:p-6 mb-6">
             <div className="flex items-center gap-3 mb-4">
-              <div className="preloader-contact">
-                <span className="preloader-ring" />
-                <span className="preloader-ring" />
-                <span className="preloader-ring" />
-                <Image
-                  src="/preloader.png"
-                  alt=""
-                  width={48}
-                  height={48}
-                  className="preloader-core"
-                  unoptimized
-                />
+              <div className="w-11 h-11 rounded-full bg-[#f9dade]/60 flex items-center justify-center">
+                <svg className="w-5 h-5" style={{ color: '#db7581' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
               </div>
               <h2 className="text-lg md:text-xl font-display text-brand">Contacto</h2>
             </div>

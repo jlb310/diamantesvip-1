@@ -380,3 +380,33 @@ body {
 .preloader-contact .preloader-ring:nth-child(3) {
   animation-delay: 1.6s;
 }
+
+/* =========================================
+   ROUTE PRELOADER — transición entre páginas
+   Reusa el diamante animado de la sección Contacto.
+   ========================================= */
+.route-preloader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-surface);
+  animation: route-preloader-fade-in 200ms ease-out;
+}
+
+.route-preloader-overlay .preloader-contact {
+  width: 132px;
+  height: 132px;
+}
+
+.route-preloader-overlay .preloader-core {
+  width: 76px;
+  height: 76px;
+}
+
+@keyframes route-preloader-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

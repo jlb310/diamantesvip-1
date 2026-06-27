@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Raleway, Parisienne } from "next/font/google"
 import "./globals.css"
 import { SiteChrome } from "@/components/SiteChrome"
+import { RoutePreloader } from "@/components/RoutePreloader"
 
 const raleway = Raleway({
   variable: "--font-raleway",
@@ -100,6 +101,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-surface text-foreground overflow-x-hidden">
         <SiteChrome>{children}</SiteChrome>
+        <RoutePreloader />
       </body>
     </html>
   )

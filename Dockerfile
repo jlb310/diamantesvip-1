@@ -10,11 +10,13 @@ RUN apk add --no-cache openssl
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # Genera el cliente Prisma, crea la DB con schema y seed, y builda la app.
+# AUTH_SECRET: placeholder para que next build pueda cargar modulos que lo
+# requieren en production mode. El secret real viene del env de Dokploy en runtime.
 RUN mkdir -p prisma/data && \
     npx prisma generate && \
     DATABASE_URL="file:/app/prisma/data/dev.db" npx prisma db push --skip-generate && \
     SEED_ON_PRODUCTION=true DATABASE_URL="file:/app/prisma/data/dev.db" node scripts/seed-safe.js && \
-    npm run build
+    AUTH_SECRET="build-time-placeholder-not-used-at-runtime" npm run build
 
 # bust cache so mv wrapper always runs: v4
 FROM node:22-alpine AS runner

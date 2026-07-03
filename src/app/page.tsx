@@ -39,8 +39,7 @@ export default function LandingPage() {
             priority
           />
           <p
-            className="text-center text-white/95 text-3xl italic tracking-wide"
-            style={{ fontFamily: 'Parisienne, cursive' }}
+            className="text-center text-white/95 text-3xl tracking-wide font-bold"
           >
             Pronto...
           </p>

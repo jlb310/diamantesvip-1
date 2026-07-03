@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Raleway, Parisienne } from "next/font/google"
+import { Raleway } from "next/font/google"
 import "./globals.css"
 import { SiteChrome } from "@/components/SiteChrome"
 import { RoutePreloader } from "@/components/RoutePreloader"
@@ -8,12 +8,6 @@ const raleway = Raleway({
   variable: "--font-raleway",
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700"],
-})
-
-const parisienne = Parisienne({
-  variable: "--font-parisienne",
-  subsets: ["latin"],
-  weight: ["400"],
 })
 
 export const metadata: Metadata = {
@@ -88,7 +82,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={`${raleway.variable} ${parisienne.variable} h-full antialiased`}>
+    <html lang="es" className={`${raleway.variable} h-full antialiased`}>
       <head>
         <meta name="theme-color" content="#F8E4E8" />
         <meta name="apple-mobile-web-app-capable" content="yes" />

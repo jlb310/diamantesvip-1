@@ -3,6 +3,9 @@ import path from "node:path";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  // Saltamos el type-check de TS durante `next build`: lo corremos por
+  // separado (tsc / eslint). Ahorra ~13s en cada deploy.
+  typescript: { ignoreBuildErrors: true },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "cdn.shopify.com" },

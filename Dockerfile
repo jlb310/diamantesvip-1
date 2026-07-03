@@ -1,8 +1,11 @@
+# syntax=docker/dockerfile:1.7
 FROM node:22-alpine AS deps
 WORKDIR /app
 RUN apk add --no-cache openssl
 COPY package.json package-lock.json ./
-RUN npm ci
+# Cache de npm via BuildKit: si package-lock no cambia, este step es casi
+# instantaneo (tarda solo en contar el cache hit).
+RUN --mount=type=cache,target=/root/.npm npm ci --no-audit --no-fund
 
 FROM node:22-alpine AS builder
 WORKDIR /app
@@ -14,12 +17,12 @@ COPY . .
 # de Dokploy en runtime; estos solo permiten que el build complete.
 ENV DATABASE_URL="file:/app/prisma/data/dev.db"
 ENV AUTH_SECRET="build-time-placeholder-not-used-at-runtime"
-# Genera el cliente Prisma, crea la DB con schema y seed, y builda la app.
-RUN mkdir -p prisma/data && \
-    npx prisma generate && \
-    npx prisma db push --skip-generate && \
-    SEED_ON_PRODUCTION=true node scripts/seed-safe.js && \
-    npm run build
+# Solo `prisma generate` (necesario para que TypeScript/Next vean el cliente
+# Prisma al buildar). El `db push` + seed se dejan al runtime (server-wrapper
+# ya los corre en startup), asi no duplicamos trabajo ni agregamos ~10s al
+# build. Para el sitemap prerenderado alcanzaba con el schema vacio; las
+# rutas de perfiles las sigue sirviendo runtime con `force-dynamic`.
+RUN npx prisma generate && npm run build --no-lint
 
 # bust cache so mv wrapper always runs: v4
 FROM node:22-alpine AS runner

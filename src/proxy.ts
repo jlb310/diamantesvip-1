@@ -42,8 +42,11 @@ export function proxy(request: NextRequest) {
     return NextResponse.next()
   }
 
+  // Redirige a /home (no a "/") para que se muestre el AgeGate y el usuario
+  // pueda verificar edad. La raiz "/" es el splash "Pronto" sin gate ni nav,
+  // lo que deja al usuario atrapado sin poder verificar.
   if (!verifyAgeCookie(request.cookies.get('age-verified')?.value)) {
-    return NextResponse.redirect(new URL('/', request.url))
+    return NextResponse.redirect(new URL('/home', request.url))
   }
 
   return NextResponse.next()

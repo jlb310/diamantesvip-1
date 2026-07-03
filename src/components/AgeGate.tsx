@@ -16,10 +16,17 @@ export function AgeGate() {
   }, [])
 
   const handleVerify = async () => {
+    // Solo cerrar el modal si la cookie firmada se seteo Really.
+    // Si el POST falla, dejamos el modal abierto para reintentar; de lo
+    // contrario el usuario queda bloqueado: sin cookie 'age-verified' el
+    // proxy redirige los perfiles, y al estar 'age-gate-dismissed' el modal
+    // no vuelve a mostrarse.
     try {
-      await fetch('/api/age-verify', { method: 'POST' })
+      const res = await fetch('/api/age-verify', { method: 'POST' })
+      if (!res.ok) throw new Error('age-verify responded ' + res.status)
     } catch (e) {
       console.error('age-verify failed:', e)
+      return
     }
     const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString()
     document.cookie = `age-gate-dismissed=true; path=/; expires=${expires}; SameSite=Lax`

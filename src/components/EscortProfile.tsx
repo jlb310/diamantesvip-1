@@ -186,10 +186,10 @@ export default function EscortProfilePage({ escort }: { escort: EscortProfile })
           </div>
         )}
 
-        {/* Perfil: foto + info al lado (mobile y desktop) */}
-        <div className="flex gap-4 md:gap-6 items-start mb-6">
-          {/* Izquierda: Carrusel de fotos */}
-          <div className="w-[150px] sm:w-[220px] md:w-[400px] flex-shrink-0 md:sticky md:top-4">
+        {/* Perfil: foto arriba (mobile) / foto + info al lado (desktop) */}
+        <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start mb-6">
+          {/* Izquierda/Arriba: Carrusel de fotos */}
+          <div className="w-full md:w-[400px] flex-shrink-0 md:sticky md:top-4">
             <div
               className="relative aspect-[3/4] bg-surface-container rounded-[16px] md:rounded-[24px] overflow-hidden cursor-pointer group md:max-w-md md:mx-0"
               onClick={() => openLightbox(photoToMediaIdx(photoIdx))}

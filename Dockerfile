@@ -17,12 +17,14 @@ COPY . .
 # de Dokploy en runtime; estos solo permiten que el build complete.
 ENV DATABASE_URL="file:/app/prisma/data/dev.db"
 ENV AUTH_SECRET="build-time-placeholder-not-used-at-runtime"
-# Solo `prisma generate` (necesario para que TypeScript/Next vean el cliente
-# Prisma al buildar). El `db push` + seed se dejan al runtime (server-wrapper
-# ya los corre en startup), asi no duplicamos trabajo ni agregamos ~10s al
-# build. Para el sitemap prerenderado alcanzaba con el schema vacio; las
-# rutas de perfiles las sigue sirviendo runtime con `force-dynamic`.
-RUN npx prisma generate && npm run build --no-lint
+# `prisma generate` (cliente para TS/Next) + `db push` (crea la DB SQLite vacia
+# necesaria para prerenderar /sitemap.xml y /robots.txt). El seed se deja al
+# runtime (server-wrapper.js ya lo corre en startup): el seed tardaba ~3s y
+# duplicaba trabajo; el db push solo ~200ms.
+RUN mkdir -p prisma/data && \
+    npx prisma generate && \
+    npx prisma db push --skip-generate && \
+    npm run build --no-lint
 
 # bust cache so mv wrapper always runs: v4
 FROM node:22-alpine AS runner

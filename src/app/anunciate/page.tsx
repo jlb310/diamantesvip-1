@@ -67,43 +67,21 @@ const BENEFITS = [
 
 const PLANS = [
   {
-    name: 'Silver',
-    price: '$200.000',
+    name: 'Plan Diamante Vip',
+    price: '$380.000',
     period: '/mes',
     features: [
-      'Perfil con foto principal',
-      'Descripción y servicios',
-      'Contacto WhatsApp y teléfono',
-      'Aparece en el listado',
-      'Panel de control',
-    ],
-    highlighted: false,
-  },
-  {
-    name: 'Gold',
-    price: '$300.000',
-    period: '/mes',
-    features: [
-      'Todo lo del plan Silver',
-      'Fotos ilimitadas',
-      'Videos en tu perfil',
-      'Perfil destacado',
-      'Estadísticas de visitas',
+      { text: 'Perfil completo con fotos ilimitadas' },
+      { text: 'Videos en tu perfil' },
+      { text: 'Contacto WhatsApp y teléfono' },
+      { text: 'Perfil destacado y prioridad en búsquedas' },
+      { text: 'Sello de verificación' },
+      { text: 'Estadísticas de visitas' },
+      { text: 'Panel de control' },
+      { text: 'Soporte prioritario' },
+      { text: 'Gift Card a elección', gift: true },
     ],
     highlighted: true,
-  },
-  {
-    name: 'VIP',
-    price: '$400.000',
-    period: '/mes',
-    features: [
-      'Todo lo del plan Gold',
-      'Prioridad en búsquedas',
-      'Sello de verificación',
-      'Aparece primero en portada',
-      'Soporte prioritario',
-    ],
-    highlighted: false,
   },
 ]
 
@@ -216,7 +194,7 @@ export default function AnunciatePage() {
               onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#f2d0d8')}
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#f9dade')}
             >
-              Ver planes
+              Ver plan
             </a>
           </div>
         </div>
@@ -252,26 +230,16 @@ export default function AnunciatePage() {
       {/* Plans */}
       <section id="plans" className="py-12 md:py-20 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-display text-center mb-3 text-brand">Planes</h2>
+          <h2 className="text-3xl font-display text-center mb-3 text-brand">Plan</h2>
           <p className="text-muted-light text-center mb-14 text-sm uppercase tracking-[0.08em]">
-            Elige el que mejor se adapte a ti
+            Todo incluido en un solo plan
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto items-start">
+          <div className="flex justify-center">
             {PLANS.map((plan) => (
               <div
                 key={plan.name}
-                className={`rounded-[24px] p-6 transition-all duration-400 ${
-                  plan.highlighted
-                    ? 'bg-white shadow-xl relative scale-105 z-10 border-2 border-[#db7581]/30'
-                    : 'bg-white/80 backdrop-blur-sm shadow-sm border border-white/50'
-                }`}
+                className="w-full max-w-sm rounded-[24px] p-6 transition-all duration-400 bg-white shadow-xl relative border-2 border-[#db7581]/30"
               >
-                {plan.highlighted && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 text-white text-[10px] font-bold px-4 py-1 rounded-full uppercase tracking-[0.12em] shadow-lg"
-                    style={{ backgroundColor: '#db7581' }}>
-                    Recomendado
-                  </div>
-                )}
                 <h3 className="text-xl font-display mb-2 text-center" style={{ color: '#727272' }}>{plan.name}</h3>
                 <div className="mb-6 text-center">
                   <span className="text-3xl font-display" style={{ color: '#db7581' }}>{plan.price}</span>
@@ -281,11 +249,17 @@ export default function AnunciatePage() {
                 </div>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2.5 text-sm" style={{ color: '#8c8484' }}>
-                      <svg className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: '#db7581' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      {feature}
+                    <li key={feature.text} className="flex items-start gap-2.5 text-sm" style={{ color: '#8c8484' }}>
+                      {feature.gift ? (
+                        <svg className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: '#db7581' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                        </svg>
+                      ) : (
+                        <svg className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: '#db7581' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      )}
+                      {feature.text}
                     </li>
                   ))}
                 </ul>

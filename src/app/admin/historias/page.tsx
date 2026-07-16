@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 
-const MAX_STORIES = 10
+const MAX_STORIES = 3
 
 export default function HistoriasManager() {
   const router = useRouter()

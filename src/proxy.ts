@@ -27,7 +27,7 @@ function verifyAgeCookie(value: string | undefined): boolean {
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  const publicPaths = ['/', '/home', '/age-verification', '/presentacion', '/api/auth', '/api/webp', '/api/age-verify', '/admin/login', '/admin/register', '/anunciate', '/contacto']
+  const publicPaths = ['/', '/home', '/age-verification', '/presentacion', '/api/auth', '/api/webp', '/api/age-verify', '/admin/login', '/admin/register', '/admin/tutorial', '/anunciate', '/contacto']
   const isPublicPath = publicPaths.some(path => pathname === path || pathname.startsWith(path + '/'))
 
   if (isPublicPath) {

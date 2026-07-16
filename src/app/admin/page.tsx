@@ -147,7 +147,7 @@ export default function AdminDashboard() {
               </svg>
             </div>
             <h2 className="text-lg font-display text-brand mb-1.5 group-hover:text-accent transition-colors">Fotos y Videos</h2>
-            <p className="text-muted-light text-sm">Sube hasta 8 fotos. Selecciona tu foto principal.</p>
+            <p className="text-muted-light text-sm">Sube hasta 9 fotos. Selecciona tu foto principal.</p>
           </Link>
 
           <Link href="/admin/tutorial" className="glass-float rounded-sm p-5 group hover:border-accent/30 transition-all duration-400 hover:-translate-y-1">

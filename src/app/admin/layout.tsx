@@ -23,6 +23,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }, [pathname])
 
   useEffect(() => {
+    // Rutas públicas dentro de /admin: no exigen sesión (el tutorial se comparte con las diamantes).
+    if (pathname === '/admin/login' || pathname === '/admin/register' || pathname === '/admin/tutorial') {
+      return
+    }
     const token = localStorage.getItem('token')
     const userData = localStorage.getItem('user')
     if (!token || !userData) {
@@ -32,7 +36,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const parsed = JSON.parse(userData)
     setUser(parsed)
     fetchEscortId(token)
-  }, [router])
+  }, [router, pathname])
 
   const fetchEscortId = async (token: string) => {
     try {
@@ -50,7 +54,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     router.push('/admin/login')
   }
 
-  if (pathname === '/admin/login' || pathname === '/admin/register') {
+  if (pathname === '/admin/login' || pathname === '/admin/register' || pathname === '/admin/tutorial') {
     return <>{children}</>
   }
 

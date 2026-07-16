@@ -12,7 +12,7 @@ interface Photo {
   order: number
 }
 
-const MAX_PHOTOS = 8
+const MAX_PHOTOS = 9
 
 export default function PhotoManager() {
   const router = useRouter()

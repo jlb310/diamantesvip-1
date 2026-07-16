@@ -409,7 +409,7 @@ export default function EscortProfilePage({ escort }: { escort: EscortProfile })
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {escort.whatsapp && (
                 <a
-                  href={`https://wa.me/${escort.whatsapp.replace(/\D/g, '')}?text=Hola!%20Te%20acabo%20de%20ver%20en%20Diamantes%20VIP`}
+                  href={`https://wa.me/${escort.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('Hola! Este mensaje viene del sitio diamantesvip.cl')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 text-white font-bold py-3.5 px-4 rounded-xl transition-all hover:scale-[1.02]"

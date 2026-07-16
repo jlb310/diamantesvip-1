@@ -66,22 +66,35 @@ export default function TutorialPage() {
 
       {/* Accesos rápidos */}
       <div className="flex flex-wrap gap-3 mb-10">
-        <Link href="/admin/profile" className="bg-accent hover:bg-accent-hover text-white font-semibold px-5 py-2.5 rounded-sm text-xs uppercase tracking-[0.1em] transition-all hover:shadow-lg hover:shadow-accent/20">
-          Ir a mi perfil
+        <Link href="/admin/login" className="bg-accent hover:bg-accent-hover text-white font-semibold px-5 py-2.5 rounded-sm text-xs uppercase tracking-[0.1em] transition-all hover:shadow-lg hover:shadow-accent/20">
+          Iniciar sesión
         </Link>
-        <Link href="/admin/photos" className="glass text-brand font-semibold px-5 py-2.5 rounded-sm text-xs uppercase tracking-[0.1em] transition-all hover:border-accent/40">
-          Ir a fotos
-        </Link>
-        <Link href="/admin/historias" className="glass text-brand font-semibold px-5 py-2.5 rounded-sm text-xs uppercase tracking-[0.1em] transition-all hover:border-accent/40">
-          Ir a historias
-        </Link>
+        <a href="https://wa.me/56932508878" target="_blank" rel="noopener noreferrer" className="glass text-brand font-semibold px-5 py-2.5 rounded-sm text-xs uppercase tracking-[0.1em] transition-all hover:border-accent/40">
+          Ayuda por WhatsApp
+        </a>
       </div>
 
       <div className="space-y-6">
-        {/* PASO 1 */}
-        <Step n={1} title="Completa tu perfil">
+        {/* PASO 1 — LOGIN */}
+        <Step n={1} title="Entra a tu cuenta">
           <p>
-            Lo primero es completar tus datos. Entra al menú{' '}
+            Abre <strong className="text-brand">diamantesvip.cl/admin/login</strong> desde tu
+            celular o computador. Escribe el <strong className="text-brand">correo</strong> y la{' '}
+            <strong className="text-brand">contraseña</strong> que te entregamos y presiona{' '}
+            <strong className="text-brand">Iniciar Sesión</strong>.
+          </p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Si aún no tienes cuenta, escríbenos por WhatsApp y te la creamos.</li>
+            <li>Al ingresar llegas a tu <strong className="text-brand">panel</strong>, donde están tu perfil, tus fotos y tus historias.</li>
+            <li>Guarda la página en tus favoritos para volver a entrar rápido.</li>
+          </ul>
+          <Shot src="/tutorial/login.png" alt="Pantalla de inicio de sesión" caption="Ingresa con tu correo y contraseña en /admin/login." />
+        </Step>
+
+        {/* PASO 2 */}
+        <Step n={2} title="Completa tu perfil">
+          <p>
+            Ya dentro del panel, completa tus datos. Entra al menú{' '}
             <strong className="text-brand">Editar Perfil</strong>. Los campos marcados con{' '}
             <span className="text-accent font-semibold">*</span> son obligatorios:
           </p>
@@ -96,14 +109,14 @@ export default function TutorialPage() {
           <Shot src="/tutorial/perfil.png" alt="Pantalla de edición de perfil" caption="Menú → Editar Perfil. Completa los campos y presiona Guardar." />
         </Step>
 
-        {/* PASO 2 */}
-        <Step n={2} title="Sube tus fotos">
+        {/* PASO 3 */}
+        <Step n={3} title="Sube tus fotos">
           <p>
             Entra a <strong className="text-brand">Fotos y Videos</strong>. Presiona el botón para{' '}
             <strong className="text-brand">subir foto</strong> y elige una imagen de tu galería.
           </p>
           <ul className="list-disc pl-5 space-y-1">
-            <li>Puedes subir hasta <strong className="text-brand">8 fotos</strong>.</li>
+            <li>Puedes subir hasta <strong className="text-brand">9 fotos</strong>.</li>
             <li>Se suben <strong className="text-brand">de una en una</strong> (selecciona una, espera a que cargue, repite).</li>
             <li>Solo se permiten <strong className="text-brand">imágenes</strong> (JPG o PNG).</li>
             <li>Marca tu <strong className="text-brand">foto principal</strong>: es la que aparece primero en tu tarjeta del sitio.</li>
@@ -112,14 +125,14 @@ export default function TutorialPage() {
           <Shot src="/tutorial/fotos.png" alt="Pantalla de subida de fotos" caption="Sube hasta 8 fotos y elige cuál será tu foto principal." />
         </Step>
 
-        {/* PASO 3 */}
-        <Step n={3} title="Sube historias y videos">
+        {/* PASO 4 */}
+        <Step n={4} title="Sube historias y videos">
           <p>
             Las <strong className="text-brand">Historias</strong> son lo más visto del sitio.
             Entra a <strong className="text-brand">Historias</strong> y sube tu contenido.
           </p>
           <ul className="list-disc pl-5 space-y-1">
-            <li>Puedes subir hasta <strong className="text-brand">10 historias</strong>.</li>
+            <li>Puedes subir hasta <strong className="text-brand">3 historias</strong>.</li>
             <li>Formatos permitidos: <strong className="text-brand">JPG, PNG o MP4</strong> (fotos o videos cortos).</li>
             <li>⏳ Las historias <strong className="text-brand">desaparecen automáticamente a las 24 horas</strong>. Súbelas seguido para mantenerte visible.</li>
           </ul>

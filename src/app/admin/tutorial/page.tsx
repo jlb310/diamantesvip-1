@@ -122,7 +122,7 @@ export default function TutorialPage() {
             <li>Marca tu <strong className="text-brand">foto principal</strong>: es la que aparece primero en tu tarjeta del sitio.</li>
             <li>Para borrar una foto, usa el botón de eliminar sobre la imagen.</li>
           </ul>
-          <Shot src="/tutorial/fotos.png" alt="Pantalla de subida de fotos" caption="Sube hasta 8 fotos y elige cuál será tu foto principal." />
+          <Shot src="/tutorial/fotos.png" alt="Pantalla de subida de fotos" caption="Sube hasta 9 fotos y elige cuál será tu foto principal." />
         </Step>
 
         {/* PASO 4 */}

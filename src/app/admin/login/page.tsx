@@ -31,6 +31,25 @@ export default function LoginPage() {
 
       localStorage.setItem('token', data.token)
       localStorage.setItem('user', JSON.stringify(data.user))
+
+      // Admin → panel. Diamante → su perfil público (no al home/panel).
+      if (data.user.role === 'admin') {
+        router.push('/admin')
+        return
+      }
+
+      try {
+        const escortRes = await fetch('/api/admin/escort', {
+          headers: { Authorization: `Bearer ${data.token}` },
+        })
+        const escortData = await escortRes.json()
+        if (escortData.escort?.id) {
+          router.push(`/diamante/${escortData.escort.id}`)
+          return
+        }
+      } catch {
+        // si falla, cae al panel
+      }
       router.push('/admin')
     } catch (err) {
       setError('Error al iniciar sesión')

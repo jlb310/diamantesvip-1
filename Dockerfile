@@ -46,6 +46,7 @@ COPY --from=builder /app/node_modules/bcryptjs ./node_modules/bcryptjs
 COPY --from=builder /app/node_modules/sharp ./node_modules/sharp
 COPY --from=builder /app/node_modules/@img ./node_modules/@img
 COPY --from=builder /app/scripts/seed-safe.js ./scripts/seed-safe.js
+COPY --from=builder /app/scripts/ensure-test-accounts.js ./scripts/ensure-test-accounts.js
 COPY server-wrapper.js ./server-wrapper.js
 # Rename original server.js → server-next.js, put wrapper as server.js
 # so even if Dokploy hard-codes "node server.js" our migrations run first

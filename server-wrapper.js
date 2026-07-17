@@ -31,6 +31,20 @@ if (existsSync(prismaIndex)) {
       console.error('[startup] seed failed:', e.message)
     }
   }
+
+  // Cuentas de prueba de Seba (idempotente, corre siempre — también en prod)
+  const testAccountsPath = path.join(__dirname, 'scripts/ensure-test-accounts.js')
+  if (existsSync(testAccountsPath)) {
+    try {
+      console.log('[startup] Ensuring test accounts...')
+      execFileSync('node', [testAccountsPath], {
+        stdio: 'inherit',
+        env: { ...process.env, DATABASE_URL: absUrl },
+      })
+    } catch (e) {
+      console.error('[startup] ensure-test-accounts failed:', e.message)
+    }
+  }
 }
 
 require('./server-next.js')

@@ -46,9 +46,9 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: '/logo_diamantes_pronto.png',
+        url: '/logo-extendido.jpeg',
         width: 1200,
-        height: 1200,
+        height: 630,
         alt: 'Diamantes VIP',
       },
     ],
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     title: 'Diamantes VIP - Diamantes en Chile',
     description:
       'Directorio de Diamantes en Chile con perfiles verificados y busqueda por ciudad.',
-    images: ['/logo_diamantes_pronto.png'],
+    images: ['/logo-extendido.jpeg'],
   },
   manifest: "/manifest.json",
   robots: {

@@ -95,7 +95,7 @@ async function main() {
   //    la #1, en 'pending' y casi vacía).
   const demoPassword = process.env.SEBA_PERFIL_PASSWORD || 'demo1234'
   await ensureUser({
-    email: 'perfil-demo@diamantesvip.cl',
+    email: 'prueba@diamantesvip.cl',
     password: demoPassword,
     role: 'escort',
     escort: {

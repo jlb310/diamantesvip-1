@@ -34,8 +34,10 @@ export default function HistoriasManager() {
     formData.append('file', file)
 
     try {
+      const token = localStorage.getItem('token')
       const res = await fetch('/api/admin/historias', {
         method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
         body: formData,
       })
       const data = await res.json()

@@ -33,7 +33,10 @@ export default function PhotoManager() {
 
   const fetchPhotos = async () => {
     try {
-      const res = await fetch('/api/admin/photos')
+      const token = localStorage.getItem('token')
+      const res = await fetch('/api/admin/photos', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       const data = await res.json()
       if (data.photos) {
         setPhotos(data.photos)
@@ -60,8 +63,10 @@ export default function PhotoManager() {
     formData.append('file', file)
 
     try {
+      const token = localStorage.getItem('token')
       const res = await fetch('/api/admin/photos', {
         method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
         body: formData,
       })
 
@@ -85,8 +90,10 @@ export default function PhotoManager() {
 
   const handleDelete = async (photoId: string) => {
     try {
+      const token = localStorage.getItem('token')
       const res = await fetch(`/api/admin/photos?id=${photoId}`, {
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
       })
 
       if (res.ok) {
@@ -102,9 +109,10 @@ export default function PhotoManager() {
 
   const handleSetMain = async (photoId: string) => {
     try {
+      const token = localStorage.getItem('token')
       const res = await fetch('/api/admin/photos/main', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ photoId }),
       })
 
@@ -174,6 +182,7 @@ export default function PhotoManager() {
                   fill
                   sizes="(max-width: 768px) 50vw, 25vw"
                   className="object-cover"
+                  unoptimized
                 />
                 <div className="absolute inset-0 bg-brand/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   <button

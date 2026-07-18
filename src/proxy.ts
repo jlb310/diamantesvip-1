@@ -37,14 +37,13 @@ export function proxy(request: NextRequest) {
   if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login') && !pathname.startsWith('/admin/register')) {
     const ageVerified = request.cookies.get('age-verified')?.value
     if (!verifyAgeCookie(ageVerified)) {
-      return NextResponse.redirect(new URL('/', request.url))
+      return NextResponse.redirect(new URL('/home', request.url))
     }
     return NextResponse.next()
   }
 
-  // Redirige a /home (no a "/") para que se muestre el AgeGate y el usuario
-  // pueda verificar edad. La raiz "/" es el splash "Pronto" sin gate ni nav,
-  // lo que deja al usuario atrapado sin poder verificar.
+  // Sin verificar edad → al inicio del sitio (/home). Ya no existe el splash
+  // "Pronto" en la raíz.
   if (!verifyAgeCookie(request.cookies.get('age-verified')?.value)) {
     return NextResponse.redirect(new URL('/home', request.url))
   }

@@ -16,9 +16,9 @@ services:
       - ./public/uploads:/app/public/uploads
     environment:
       - NODE_ENV=production
-      # Postgres (servicio Dokploy en la misma VPS). Si esta URL falla, el
-      # fallback del Dockerfile es la SQLite del volumen.
-      - DATABASE_URL=postgresql://postgres:vvrHVTs6QB2eBOA1RgC5@diamantes-vip-datab-04a60v:5432/diamantesdibi
+      # La URL real del Postgres NO va en el repo: se inyecta por env
+      # (en prod vive en el Environment del servicio en Dokploy).
+      - DATABASE_URL=${DATABASE_URL}
       - PORT=3000
     networks:
       - default

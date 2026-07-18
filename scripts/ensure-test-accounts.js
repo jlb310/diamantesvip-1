@@ -52,7 +52,7 @@ async function ensureUser({ email, password, role, escort, photos }) {
     },
   })
 
-  console.log(`✅ Cuenta de prueba creada: ${email} / ${password} (${role})`)
+  console.log(`✅ Cuenta de prueba creada: ${email} (${role})`)
   return true
 }
 

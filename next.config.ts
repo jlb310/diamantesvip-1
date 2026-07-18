@@ -24,6 +24,19 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["error", "warn"] } : false,
   },
+  async headers() {
+    // Cache largo para estáticos de public/ (Next los sirve sin cache por defecto)
+    const longCache = [{ key: "Cache-Control", value: "public, max-age=2592000" }];
+    const immutable = [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }];
+    return [
+      { source: "/videos/:path*", headers: longCache },
+      { source: "/icons/:path*", headers: immutable },
+      { source: "/webp/:path*", headers: immutable },
+      { source: "/logo-extendido.jpeg", headers: longCache },
+      { source: "/logo-cuadrado.jpeg", headers: longCache },
+      { source: "/preloader.png", headers: longCache },
+    ];
+  },
 };
 
 export default nextConfig;

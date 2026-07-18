@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef } from 'react'
 import Image from 'next/image'
 import { webpUrl } from '@/lib/webp'
 
@@ -17,32 +17,19 @@ interface ShortsRowProps {
   shorts: Short[]
 }
 
-const VISIBLE_COUNT = 5
 const CARD_WIDTH = 236
 const GAP = 16
 const STEP = CARD_WIDTH + GAP
 
-function ShortCard({ short, isActive }: { short: Short; isActive: boolean }) {
+// El <video> solo se monta cuando el usuario da play: evita hidratar/descargar
+// decenas de videos que nadie está viendo (antes: 64 <video> con preload).
+function ShortCard({ short }: { short: Short }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [muted, setMuted] = useState(true)
   const [playing, setPlaying] = useState(false)
   const [videoError, setVideoError] = useState(false)
-  // El <video> solo se monta cuando hace falta (activo en el carrusel o el usuario
-  // pidió play). Evita hidratar/descargar decenas de videos que nadie está viendo.
   const [wantsPlay, setWantsPlay] = useState(false)
-  const mountVideo = (isActive || wantsPlay) && !videoError
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video || videoError) return
-    if (isActive || wantsPlay) {
-      video.play().then(() => setPlaying(true)).catch(() => setPlaying(false))
-    } else {
-      video.pause()
-      video.currentTime = 0
-      setPlaying(false)
-    }
-  }, [isActive, wantsPlay, videoError])
+  const mountVideo = wantsPlay && !videoError
 
   const handlePlayClick = () => {
     const video = videoRef.current
@@ -53,33 +40,33 @@ function ShortCard({ short, isActive }: { short: Short; isActive: boolean }) {
     if (playing) {
       video.pause()
       setPlaying(false)
-      setWantsPlay(false)
     } else {
       video.play().then(() => setPlaying(true)).catch(() => setPlaying(false))
-      setWantsPlay(true)
     }
   }
 
   const posterUrl = webpUrl(short.thumbnail || short.escortPhoto || undefined, 480) || undefined
 
   return (
-    <div className="relative aspect-[9/16] flex-shrink-0 rounded-sm overflow-hidden bg-surface-container border border-border group" style={{ width: CARD_WIDTH }}>
+    <div className="relative aspect-[9/16] flex-shrink-0 rounded-sm overflow-hidden bg-surface-container border border-border group snap-start" style={{ width: CARD_WIDTH }}>
       {mountVideo ? (
         <video
           ref={videoRef}
           src={short.url}
           poster={posterUrl}
           muted={muted}
+          autoPlay
           loop
           playsInline
-          preload="metadata"
           crossOrigin="anonymous"
           className="absolute inset-0 w-full h-full object-cover"
           onError={() => setVideoError(true)}
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
         />
       ) : null}
 
-      {/* Fallback poster / background (lazy: solo se descarga al entrar al viewport) */}
+      {/* Poster (lazy: solo se descarga al entrar al viewport) */}
       {(videoError || !playing) && posterUrl && (
         <Image
           src={posterUrl}
@@ -96,6 +83,7 @@ function ShortCard({ short, isActive }: { short: Short; isActive: boolean }) {
       <button
         onClick={handlePlayClick}
         className="absolute inset-0 z-10 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity"
+        aria-label={playing ? 'Pausar' : 'Reproducir'}
       >
         <div className="w-12 h-12 rounded-full bg-accent/90 flex items-center justify-center shadow-lg">
           {playing ? (
@@ -106,7 +94,7 @@ function ShortCard({ short, isActive }: { short: Short; isActive: boolean }) {
         </div>
       </button>
 
-      {/* Always-visible play indicator when paused */}
+      {/* Indicador de play siempre visible cuando está pausado */}
       {!playing && (
         <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
           <div className="w-12 h-12 rounded-full bg-accent/90 flex items-center justify-center shadow-lg">
@@ -115,7 +103,7 @@ function ShortCard({ short, isActive }: { short: Short; isActive: boolean }) {
         </div>
       )}
 
-      <button onClick={(e) => { e.stopPropagation(); setMuted(!muted) }} className="absolute top-3 right-3 z-20 glass-dark rounded-full p-2.5 opacity-60 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+      <button onClick={(e) => { e.stopPropagation(); setMuted(!muted) }} className="absolute top-3 right-3 z-20 glass-dark rounded-full p-2.5 opacity-60 md:opacity-0 md:group-hover:opacity-100 transition-opacity" aria-label={muted ? 'Activar sonido' : 'Silenciar'}>
         {muted ? (
           <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" /></svg>
         ) : (
@@ -139,39 +127,16 @@ function ShortCard({ short, isActive }: { short: Short; isActive: boolean }) {
   )
 }
 
+// Carrusel con scroll nativo (sin clones ni transform): cada short se renderiza
+// UNA vez — antes la lista se triplicaba para el loop infinito.
 export function ShortsRow({ shorts }: ShortsRowProps) {
-  // Triple the array for seamless infinite loop
-  const loopItems = [...shorts, ...shorts, ...shorts]
-  const baseCount = shorts.length
-  const [scrollIndex, setScrollIndex] = useState(baseCount)
-  const containerWidth = VISIBLE_COUNT * CARD_WIDTH + (VISIBLE_COUNT - 1) * GAP
-
-  const scrollTo = useCallback((index: number) => {
-    setScrollIndex(index)
-  }, [])
-  
-  const next = () => scrollTo(scrollIndex + 1)
-  const prev = () => scrollTo(scrollIndex - 1)
-  
-  // Handle infinite loop wrapping
-  useEffect(() => {
-    if (scrollIndex >= baseCount * 2) {
-      // Wrapped past the end — jump back to start of middle copy
-      const timer = setTimeout(() => {
-        setScrollIndex(scrollIndex - baseCount)
-      }, 400)
-      return () => clearTimeout(timer)
-    }
-    if (scrollIndex < baseCount) {
-      // Wrapped before the start — jump forward to end of middle copy
-      const timer = setTimeout(() => {
-        setScrollIndex(scrollIndex + baseCount)
-      }, 400)
-      return () => clearTimeout(timer)
-    }
-  }, [scrollIndex, baseCount])
+  const scrollerRef = useRef<HTMLDivElement>(null)
 
   if (shorts.length === 0) return null
+
+  const scrollByDir = (dir: 1 | -1) => {
+    scrollerRef.current?.scrollBy({ left: dir * STEP, behavior: 'smooth' })
+  }
 
   return (
     <div className="pt-10 pb-6">
@@ -180,30 +145,19 @@ export function ShortsRow({ shorts }: ShortsRowProps) {
         <h2 className="text-xl md:text-2xl font-bold text-brand font-serif italic">Últimos Shorts</h2>
       </div>
 
-      {/* Mobile: scrollable row */}
-      <div className="md:hidden px-4">
-        <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2">
-          {shorts.map((short) => (
-            <ShortCard key={short.id} short={short} isActive={false} />
-          ))}
-        </div>
-      </div>
-
-      {/* Desktop: carousel with arrows */}
-      <div className="hidden md:block relative" style={{ width: containerWidth }}>
-        <button onClick={prev} className="absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full glass shadow-lg border border-border flex items-center justify-center hover:border-accent/50 transition-all">
+      <div className="relative">
+        {/* Flechas solo en desktop */}
+        <button onClick={() => scrollByDir(-1)} className="hidden md:flex absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full glass shadow-lg border border-border items-center justify-center hover:border-accent/50 transition-all" aria-label="Anteriores">
           <svg className="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
         </button>
-        <button onClick={next} className="absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full glass shadow-lg border border-border flex items-center justify-center hover:border-accent/50 transition-all">
+        <button onClick={() => scrollByDir(1)} className="hidden md:flex absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full glass shadow-lg border border-border items-center justify-center hover:border-accent/50 transition-all" aria-label="Siguientes">
           <svg className="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
         </button>
 
-        <div className="overflow-hidden rounded-sm">
-          <div className="flex transition-transform duration-400 ease-out" style={{ gap: GAP, transform: `translateX(-${scrollIndex * STEP}px)` }}>
-            {loopItems.map((short, i) => (
-              <ShortCard key={`${short.id}-${i}`} short={short} isActive={i >= scrollIndex && i < scrollIndex + VISIBLE_COUNT} />
-            ))}
-          </div>
+        <div ref={scrollerRef} className="flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide pb-2 px-4 md:px-0 snap-x rounded-sm">
+          {shorts.map((short) => (
+            <ShortCard key={short.id} short={short} />
+          ))}
         </div>
       </div>
     </div>

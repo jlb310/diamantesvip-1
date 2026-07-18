@@ -93,12 +93,13 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-surface text-foreground overflow-x-hidden">
         <SiteChrome>{children}</SiteChrome>
         <RoutePreloader />
-        {/* Google tag (gtag.js) — afterInteractive: no bloquea la carga inicial */}
+        {/* Google tag (gtag.js) — lazyOnload: carga en idle después del load,
+            no compite con la hidratación (el page_view se envía igual) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-KQ1GY490ND"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="gtag-init" strategy="afterInteractive">
+        <Script id="gtag-init" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}

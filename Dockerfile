@@ -12,18 +12,14 @@ WORKDIR /app
 RUN apk add --no-cache openssl
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-# DB y secret de build: el sitemap.ts prerendera consultando Prisma, y auth.ts
-# requiere AUTH_SECRET en production mode. Los valores reales vienen del env
-# de Dokploy en runtime; estos solo permiten que el build complete.
-ENV DATABASE_URL="file:/app/prisma/data/dev.db"
+# DB y secret de build: placeholders para que el build complete. El sitemap es
+# force-dynamic (ya no consulta la DB en build) y auth.ts requiere AUTH_SECRET
+# en production mode. Los valores reales vienen del env en runtime.
+ENV DATABASE_URL="postgresql://build:build@localhost:5432/build"
 ENV AUTH_SECRET="build-time-placeholder-not-used-at-runtime"
-# `prisma generate` (cliente para TS/Next) + `db push` (crea la DB SQLite vacia
-# necesaria para prerenderar /sitemap.xml y /robots.txt). El seed se deja al
-# runtime (server-wrapper.js ya lo corre en startup): el seed tardaba ~3s y
-# duplicaba trabajo; el db push solo ~200ms.
-RUN mkdir -p prisma/data && \
-    npx prisma generate && \
-    npx prisma db push --skip-generate && \
+# `prisma generate` (cliente para TS/Next). El schema se aplica en runtime
+# (server-wrapper.js corre db push en el arranque contra el Postgres real).
+RUN npx prisma generate && \
     npm run build --no-lint
 
 # bust cache so mv wrapper always runs: v4
@@ -31,6 +27,9 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 RUN apk add --no-cache openssl
 ENV NODE_ENV=production
+# Fallback si el env de despliegue no trae DATABASE_URL (la URL real de
+# Postgres viene de docker-compose/Dokploy). Con file: el sitio sigue
+# funcionando con la SQLite del volumen, como antes.
 ENV DATABASE_URL=file:./prisma/data/dev.db
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
@@ -38,7 +37,6 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/prisma/data/dev.db ./prisma/data/dev.db
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
@@ -47,6 +45,7 @@ COPY --from=builder /app/node_modules/sharp ./node_modules/sharp
 COPY --from=builder /app/node_modules/@img ./node_modules/@img
 COPY --from=builder /app/scripts/seed-safe.js ./scripts/seed-safe.js
 COPY --from=builder /app/scripts/ensure-test-accounts.js ./scripts/ensure-test-accounts.js
+COPY --from=builder /app/scripts/migrate-sqlite-to-postgres.js ./scripts/migrate-sqlite-to-postgres.js
 COPY server-wrapper.js ./server-wrapper.js
 # Rename original server.js → server-next.js, put wrapper as server.js
 # so even if Dokploy hard-codes "node server.js" our migrations run first

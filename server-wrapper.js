@@ -27,20 +27,47 @@ if (!process.env.AUTH_SECRET) {
 }
 
 const dbUrl = process.env.DATABASE_URL || 'file:./prisma/data/dev.db'
-const dbPath = dbUrl.replace(/^file:/, '')
-const absDb = path.isAbsolute(dbPath) ? dbPath : path.join(__dirname, dbPath)
-const absUrl = 'file:' + absDb
+const isSqliteUrl = dbUrl.startsWith('file:')
+// Para SQLite la URL se absolutiza (el cwd de Next difiere del de los scripts);
+// para Postgres se usa tal cual.
+let absUrl = dbUrl
+if (isSqliteUrl) {
+  const dbPath = dbUrl.replace(/^file:/, '')
+  const absDb = path.isAbsolute(dbPath) ? dbPath : path.join(__dirname, dbPath)
+  absUrl = 'file:' + absDb
+}
 
 const prismaIndex = path.join(__dirname, 'node_modules/prisma/build/index.js')
 if (existsSync(prismaIndex)) {
   try {
-    console.log('[startup] Applying schema to', absDb)
+    console.log('[startup] Applying schema to', isSqliteUrl ? absUrl : 'postgres')
     execFileSync('node', [prismaIndex, 'db', 'push', '--skip-generate'], {
       stdio: 'inherit',
       env: { ...process.env, DATABASE_URL: absUrl },
     })
   } catch (e) {
     console.error('[startup] db push failed:', e.message)
+  }
+
+  // Migración one-shot SQLite → Postgres (idempotente: solo actúa si PG está
+  // vacío y existe la SQLite antigua en el volumen de datos)
+  const migratePath = path.join(__dirname, 'scripts/migrate-sqlite-to-postgres.js')
+  if (!isSqliteUrl && existsSync(migratePath)) {
+    try {
+      console.log('[startup] Checking SQLite → Postgres migration...')
+      const nodeMajor = parseInt(process.versions.node, 10)
+      const nodeArgs = nodeMajor < 23 ? ['--experimental-sqlite', migratePath] : [migratePath]
+      execFileSync('node', nodeArgs, {
+        stdio: 'inherit',
+        env: {
+          ...process.env,
+          DATABASE_URL: absUrl,
+          SQLITE_PATH: path.join(__dirname, 'prisma/data/dev.db'),
+        },
+      })
+    } catch (e) {
+      console.error('[startup] ATENCION: migración SQLite→Postgres falló:', e.message)
+    }
   }
 
   const seedPath = path.join(__dirname, 'scripts/seed-safe.js')

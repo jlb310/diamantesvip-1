@@ -10,10 +10,21 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      # La base de datos persiste en el host, fuera del contenedor
+      # prisma/data conserva la SQLite antigua (fuente de la migración one-shot
+      # a Postgres) y el .auth-secret persistente
       - ./data:/app/prisma/data
       - ./public/uploads:/app/public/uploads
     environment:
       - NODE_ENV=production
-      - DATABASE_URL=file:./prisma/data/dev.db
+      # Postgres (servicio Dokploy en la misma VPS). Si esta URL falla, el
+      # fallback del Dockerfile es la SQLite del volumen.
+      - DATABASE_URL=postgresql://postgres:vvrHVTs6QB2eBOA1RgC5@diamantes-vip-datab-04a60v:5432/diamantesdibi
       - PORT=3000
+    networks:
+      - default
+      # Red de Dokploy: necesaria para resolver el hostname del Postgres
+      - dokploy-network
+
+networks:
+  dokploy-network:
+    external: true

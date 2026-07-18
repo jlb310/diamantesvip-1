@@ -5,8 +5,12 @@ function encodeUrl(url: string): string {
   return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
 }
 
-export function webpUrl(url: string | null | undefined): string {
+// Anchos permitidos por /api/webp (debe calzar con ALLOWED_WIDTHS del route).
+export type WebpWidth = 96 | 240 | 480 | 1200
+
+export function webpUrl(url: string | null | undefined, width?: WebpWidth): string {
   if (!url) return ''
   if (!url.startsWith('http')) return url
-  return `/api/webp/${encodeUrl(url)}`
+  const base = `/api/webp/${encodeUrl(url)}`
+  return width && width !== 1200 ? `${base}?w=${width}` : base
 }

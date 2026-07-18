@@ -27,35 +27,44 @@ function ShortCard({ short, isActive }: { short: Short; isActive: boolean }) {
   const [muted, setMuted] = useState(true)
   const [playing, setPlaying] = useState(false)
   const [videoError, setVideoError] = useState(false)
+  // El <video> solo se monta cuando hace falta (activo en el carrusel o el usuario
+  // pidió play). Evita hidratar/descargar decenas de videos que nadie está viendo.
+  const [wantsPlay, setWantsPlay] = useState(false)
+  const mountVideo = (isActive || wantsPlay) && !videoError
 
   useEffect(() => {
     const video = videoRef.current
     if (!video || videoError) return
-    if (isActive) {
+    if (isActive || wantsPlay) {
       video.play().then(() => setPlaying(true)).catch(() => setPlaying(false))
     } else {
       video.pause()
       video.currentTime = 0
       setPlaying(false)
     }
-  }, [isActive, videoError])
+  }, [isActive, wantsPlay, videoError])
 
   const handlePlayClick = () => {
     const video = videoRef.current
-    if (!video) return
+    if (!video) {
+      setWantsPlay(true)
+      return
+    }
     if (playing) {
       video.pause()
       setPlaying(false)
+      setWantsPlay(false)
     } else {
       video.play().then(() => setPlaying(true)).catch(() => setPlaying(false))
+      setWantsPlay(true)
     }
   }
 
-  const posterUrl = webpUrl(short.thumbnail || short.escortPhoto || undefined) || undefined
+  const posterUrl = webpUrl(short.thumbnail || short.escortPhoto || undefined, 480) || undefined
 
   return (
     <div className="relative aspect-[9/16] flex-shrink-0 rounded-sm overflow-hidden bg-surface-container border border-border group" style={{ width: CARD_WIDTH }}>
-      {!videoError ? (
+      {mountVideo ? (
         <video
           ref={videoRef}
           src={short.url}
@@ -70,11 +79,16 @@ function ShortCard({ short, isActive }: { short: Short; isActive: boolean }) {
         />
       ) : null}
 
-      {/* Fallback poster / background */}
+      {/* Fallback poster / background (lazy: solo se descarga al entrar al viewport) */}
       {(videoError || !playing) && posterUrl && (
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${posterUrl})` }}
+        <Image
+          src={posterUrl}
+          alt=""
+          fill
+          sizes="236px"
+          unoptimized
+          loading="lazy"
+          className="object-cover"
         />
       )}
 
@@ -112,7 +126,7 @@ function ShortCard({ short, isActive }: { short: Short; isActive: boolean }) {
         <div className="flex items-center gap-2">
           {short.escortPhoto && short.escortPhoto.startsWith('http') && (
             <div className="w-7 h-7 rounded-full overflow-hidden border border-border flex-shrink-0 relative">
-              <Image src={webpUrl(short.escortPhoto)} alt={short.escortName} fill sizes="28px" unoptimized className="object-cover" />
+              <Image src={webpUrl(short.escortPhoto, 96)} alt={short.escortName} fill sizes="28px" unoptimized className="object-cover" />
             </div>
           )}
           <div className="min-w-0">

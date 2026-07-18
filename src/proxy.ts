@@ -27,7 +27,7 @@ function verifyAgeCookie(value: string | undefined): boolean {
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  const publicPaths = ['/', '/home', '/age-verification', '/presentacion', '/api/auth', '/api/webp', '/api/age-verify', '/admin/login', '/admin/register', '/admin/tutorial', '/anunciate', '/contacto']
+  const publicPaths = ['/', '/home', '/sitemap.xml', '/robots.txt', '/age-verification', '/presentacion', '/api/auth', '/api/webp', '/api/age-verify', '/admin/login', '/admin/register', '/admin/tutorial', '/anunciate', '/contacto']
   const isPublicPath = publicPaths.some(path => pathname === path || pathname.startsWith(path + '/'))
 
   if (isPublicPath) {
@@ -37,15 +37,15 @@ export function proxy(request: NextRequest) {
   if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login') && !pathname.startsWith('/admin/register')) {
     const ageVerified = request.cookies.get('age-verified')?.value
     if (!verifyAgeCookie(ageVerified)) {
-      return NextResponse.redirect(new URL('/home', request.url))
+      return NextResponse.redirect(new URL('/', request.url))
     }
     return NextResponse.next()
   }
 
-  // Sin verificar edad → al inicio del sitio (/home). Ya no existe el splash
+  // Sin verificar edad → al inicio del sitio (/). Ya no existe el splash
   // "Pronto" en la raíz.
   if (!verifyAgeCookie(request.cookies.get('age-verified')?.value)) {
-    return NextResponse.redirect(new URL('/home', request.url))
+    return NextResponse.redirect(new URL('/', request.url))
   }
 
   return NextResponse.next()

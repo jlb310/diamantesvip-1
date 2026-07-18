@@ -6,7 +6,7 @@ import Link from 'next/link'
 export default function AgeVerificationPage() {
   const handleVerify = async () => {
     await fetch('/api/age-verify', { method: 'POST' })
-    window.location.href = '/home'
+    window.location.href = '/'
   }
 
   return (

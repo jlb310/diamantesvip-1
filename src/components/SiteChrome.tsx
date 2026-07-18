@@ -9,12 +9,7 @@ import { AgeGate } from '@/components/AgeGate'
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const isLanding = pathname === '/'
   const isAdmin = pathname.startsWith('/admin')
-
-  if (isLanding) {
-    return <>{children}</>
-  }
 
   return (
     <>

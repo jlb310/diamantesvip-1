@@ -100,7 +100,7 @@ export default function AdminDashboard() {
               </Link>
             </>
           )}
-          <Link href="/home" className="glass text-muted hover:text-brand font-medium px-5 py-2.5 rounded-sm text-xs transition-all">
+          <Link href="/" className="glass text-muted hover:text-brand font-medium px-5 py-2.5 rounded-sm text-xs transition-all">
             ← Volver al sitio
           </Link>
         </div>

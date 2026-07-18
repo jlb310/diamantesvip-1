@@ -11,7 +11,19 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [hidden, setHidden] = useState(false)
+  // Rol del usuario logueado (localStorage) — los links Admin/Diamante
+  // solo se muestran al perfil que corresponde.
+  const [role, setRole] = useState<string | null>(null)
   const lastScrollY = useRef(0)
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('user')
+      setRole(raw ? (JSON.parse(raw)?.role ?? null) : null)
+    } catch {
+      setRole(null)
+    }
+  }, [pathname])
 
   // Close overlays on route change
   useEffect(() => {
@@ -49,17 +61,19 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [handleScroll])
 
-  if (pathname === '/') {
-    return null
-  }
-
   const navLinks = [
-    { key: 'inicio', href: '/home', label: 'Inicio' },
-    { key: 'vip', href: '/home?tier=VIP', label: 'Diamantes Vip' },
-    { key: 'gold', href: '/home?tier=Gold', label: 'Diamantes Gold' },
-    { key: 'silver', href: '/home?tier=Silver', label: 'Diamantes Silver' },
+    { key: 'inicio', href: '/', label: 'Inicio' },
+    { key: 'vip', href: '/?tier=VIP', label: 'Diamantes Vip' },
+    { key: 'gold', href: '/?tier=Gold', label: 'Diamantes Gold' },
+    { key: 'silver', href: '/?tier=Silver', label: 'Diamantes Silver' },
     { key: 'anunciate', href: '/anunciate', label: 'Anúnciate' },
     { key: 'contacto', href: '/contacto', label: 'Contáctanos' },
+  ]
+
+  // Links de panel según el perfil logueado (ninguno si no hay sesión)
+  const panelLinks = [
+    ...(role === 'admin' ? [{ key: 'admin', href: '/admin', label: 'Admin' }] : []),
+    ...(role === 'escort' ? [{ key: 'diamante', href: '/admin', label: 'Diamante' }] : []),
   ]
 
   return (
@@ -73,7 +87,7 @@ export function Header() {
         <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
 
         <div className="max-w-7xl mx-auto px-4 py-2 md:py-3 flex items-center justify-between">
-          <Link href="/home" className="flex items-center flex-shrink-0">
+          <Link href="/" className="flex items-center flex-shrink-0">
             <Image
               src="/logo-extendido.jpeg"
               alt="Diamantes VIP"
@@ -105,18 +119,15 @@ export function Header() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </button>
-            <Link
-              href="/dev-login?role=admin"
-              className="text-[#db7581] hover:text-accent transition-colors duration-300"
-            >
-              Admin
-            </Link>
-            <Link
-              href="/dev-login?role=escort"
-              className="text-[#db7581] hover:text-accent transition-colors duration-300"
-            >
-              Diamante
-            </Link>
+            {panelLinks.map((link) => (
+              <Link
+                key={link.key}
+                href={link.href}
+                className="text-[#db7581] hover:text-accent transition-colors duration-300"
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
 
           {/* Mobile controls */}
@@ -219,27 +230,20 @@ export function Header() {
                     </svg>
                   </Link>
               ))}
-              <div className="my-2 border-t border-[#f9dade]" />
-              <Link
-                href="/dev-login?role=admin"
-                onClick={() => setMenuOpen(false)}
-                className="group flex items-center py-3.5 px-4 rounded-xl text-[#db7581] hover:text-brand hover:bg-[#f9dade]/60 transition-all duration-300"
-              >
-                <span className="text-base font-medium tracking-wide">Admin</span>
-                <svg className="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-[#db7581]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-              <Link
-                href="/dev-login?role=escort"
-                onClick={() => setMenuOpen(false)}
-                className="group flex items-center py-3.5 px-4 rounded-xl text-[#db7581] hover:text-brand hover:bg-[#f9dade]/60 transition-all duration-300"
-              >
-                <span className="text-base font-medium tracking-wide">Diamante</span>
-                <svg className="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-[#db7581]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
+              {panelLinks.length > 0 && <div className="my-2 border-t border-[#f9dade]" />}
+              {panelLinks.map((link) => (
+                <Link
+                  key={link.key}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="group flex items-center py-3.5 px-4 rounded-xl text-[#db7581] hover:text-brand hover:bg-[#f9dade]/60 transition-all duration-300"
+                >
+                  <span className="text-base font-medium tracking-wide">{link.label}</span>
+                  <svg className="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-[#db7581]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              ))}
             </nav>
 
             {/* Bottom accent */}

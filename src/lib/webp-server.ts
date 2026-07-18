@@ -4,8 +4,10 @@ export function urlToHash(url: string): string {
   return createHash('sha256').update(url).digest('hex').slice(0, 24)
 }
 
-export function webpLocalPath(url: string): string {
-  return `/webp/${urlToHash(url)}.webp`
+export function webpLocalPath(url: string, width = 1200): string {
+  // El ancho por defecto (1200) mantiene el nombre histórico para reusar el caché existente.
+  const suffix = width === 1200 ? '' : `-w${width}`
+  return `/webp/${urlToHash(url)}${suffix}.webp`
 }
 
 export function decodeWebpPath(encoded: string): string {

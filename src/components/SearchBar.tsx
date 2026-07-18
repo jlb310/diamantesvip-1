@@ -104,7 +104,7 @@ function SearchBarContent({ isOpen, onClose }: SearchBarProps) {
         params.set('toggles', Array.from(newToggles).join(','))
       }
       const qs = params.toString()
-      router.push(qs ? `/home?${qs}` : '/home')
+      router.push(qs ? `/?${qs}` : '/')
       onClose()
     },
     [router, onClose]

@@ -45,7 +45,7 @@ export function EscortCard({ escort }: EscortCardProps) {
       <div className="aspect-[2/3] relative bg-surface-container overflow-hidden">
         {escort.mainPhoto && escort.mainPhoto.startsWith('http') ? (
           <Image
-            src={webpUrl(escort.mainPhoto)}
+            src={webpUrl(escort.mainPhoto, 480)}
             alt={escort.name}
             fill
             sizes="(max-width: 1024px) 50vw, 25vw"

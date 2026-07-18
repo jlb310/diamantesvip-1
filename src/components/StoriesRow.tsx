@@ -68,7 +68,7 @@ export function StoriesRow({ escorts }: StoriesRowProps) {
                 <div className="absolute inset-0 rounded-full bg-surface m-[3px]" />
                 <div className="relative w-full h-full rounded-full overflow-hidden">
                   {escort.mainPhoto && escort.mainPhoto.startsWith('http') ? (
-                    <Image src={webpUrl(escort.mainPhoto)} alt={escort.alias || escort.name} fill sizes="88px" unoptimized className="object-cover" />
+                    <Image src={webpUrl(escort.mainPhoto, 240)} alt={escort.alias || escort.name} fill sizes="88px" unoptimized className="object-cover" />
                   ) : (
                     <div className="w-full h-full bg-surface-container flex items-center justify-center"><span className="text-3xl">💎</span></div>
                   )}
@@ -98,7 +98,7 @@ export function StoriesRow({ escorts }: StoriesRowProps) {
                     <div className="absolute inset-0 rounded-full bg-surface m-[3px]" />
                     <div className="relative w-full h-full rounded-full overflow-hidden">
                       {escort.mainPhoto && escort.mainPhoto.startsWith('http') ? (
-                        <Image src={webpUrl(escort.mainPhoto)} alt={escort.alias || escort.name} fill sizes="116px" unoptimized className="object-cover group-hover:scale-110 transition-transform duration-300" />
+                        <Image src={webpUrl(escort.mainPhoto, 240)} alt={escort.alias || escort.name} fill sizes="116px" unoptimized className="object-cover group-hover:scale-110 transition-transform duration-300" />
                       ) : (
                         <div className="w-full h-full bg-surface-container flex items-center justify-center"><span className="text-4xl">💎</span></div>
                       )}

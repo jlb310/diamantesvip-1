@@ -24,7 +24,7 @@ export function Footer() {
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <h4 className="text-brand font-semibold mb-3 uppercase tracking-wider text-sm">Explora</h4>
             <nav className="flex flex-col items-center md:items-start gap-2">
-              <Link href="/home" className="text-muted hover:text-accent text-sm transition-colors">
+              <Link href="/" className="text-muted hover:text-accent text-sm transition-colors">
                 Inicio
               </Link>
               <Link href="/anunciate" className="text-muted hover:text-accent text-sm transition-colors">

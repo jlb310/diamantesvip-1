@@ -7,6 +7,8 @@ import { decodeWebpPath, webpLocalPath } from '@/lib/webp-server'
 const WEBP_DIR = join(process.cwd(), 'public', 'webp')
 const MAX_WIDTH = 1200
 const QUALITY = 80
+// Anchos permitidos vía ?w= (debe calzar con WebpWidth de src/lib/webp.ts)
+const ALLOWED_WIDTHS = [96, 240, 480, 1200]
 
 const ALLOWED_HOSTS = [
   'cdn.shopify.com',
@@ -41,7 +43,10 @@ export async function GET(
     return new NextResponse('Forbidden', { status: 403 })
   }
 
-  const localPath = webpLocalPath(originalUrl)
+  const wParam = Number(new URL(request.url).searchParams.get('w')) || MAX_WIDTH
+  const width = ALLOWED_WIDTHS.includes(wParam) ? wParam : MAX_WIDTH
+
+  const localPath = webpLocalPath(originalUrl, width)
   const absPath = join(process.cwd(), 'public', localPath)
 
   if (existsSync(absPath)) {
@@ -64,7 +69,7 @@ export async function GET(
     try {
       const sharp = (await import('sharp')).default
       const webpBuf = await sharp(buf)
-        .resize({ width: MAX_WIDTH, withoutEnlargement: true })
+        .resize({ width, withoutEnlargement: true })
         .webp({ quality: QUALITY })
         .toBuffer()
 

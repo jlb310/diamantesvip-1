@@ -131,7 +131,7 @@ export default function EscortProfilePage({ escort }: { escort: EscortProfile })
       {/* Breadcrumb */}
       <div className="glass-strong">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-2 text-xs md:text-sm">
-          <Link href="/home" className="text-accent hover:text-accent-hover transition-colors">
+          <Link href="/" className="text-accent hover:text-accent-hover transition-colors">
             Inicio
           </Link>
           <span className="text-border">/</span>

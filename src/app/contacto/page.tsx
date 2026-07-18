@@ -47,7 +47,7 @@ export default function ContactoPage() {
           <Link href="/anunciate" className="text-sm underline underline-offset-4" style={{ color: '#db7581' }}>
             ¿Quieres anunciarte?
           </Link>
-          <Link href="/home" className="text-sm text-muted-light hover:text-brand transition-colors">
+          <Link href="/" className="text-sm text-muted-light hover:text-brand transition-colors">
             Volver al inicio
           </Link>
         </div>

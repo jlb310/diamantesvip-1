@@ -125,7 +125,7 @@ async function main() {
       hotels: true,
       homeService: true,
       price: 120000,
-      availability: 'Lunes a sábado, 15:00 a 00:00 hrs',
+      availability: JSON.stringify({ LUN: '15:00 a 00:00', MAR: '15:00 a 00:00', MIE: '15:00 a 00:00', JUE: '15:00 a 00:00', VIE: '15:00 a 02:00', SAB: '15:00 a 02:00', DOM: 'Descanso' }),
       active: true,
       status: 'approved', // visible en el sitio: el perfil se ve lleno
       verified: true,

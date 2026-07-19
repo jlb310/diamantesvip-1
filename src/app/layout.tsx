@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
 import { Raleway } from "next/font/google"
-import Script from "next/script"
 import "./globals.css"
 import { SiteChrome } from "@/components/SiteChrome"
 import { RoutePreloader } from "@/components/RoutePreloader"
+import { GtagLoader } from "@/components/GtagLoader"
 
 const raleway = Raleway({
   variable: "--font-raleway",
@@ -93,20 +93,8 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-surface text-foreground overflow-x-hidden">
         <SiteChrome>{children}</SiteChrome>
         <RoutePreloader />
-        {/* Google tag (gtag.js) — lazyOnload: carga en idle después del load,
-            no compite con la hidratación (el page_view se envía igual) */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-KQ1GY490ND"
-          strategy="lazyOnload"
-        />
-        <Script id="gtag-init" strategy="lazyOnload">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-KQ1GY490ND');
-          `}
-        </Script>
+        {/* Google tag (gtag.js) — se carga en la primera interacción del usuario */}
+        <GtagLoader />
       </body>
     </html>
   )

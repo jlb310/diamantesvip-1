@@ -40,7 +40,7 @@ export function EscortCard({ escort }: EscortCardProps) {
   return (
     <Link
       href={`/diamante/${escort.id}`}
-      className="group block glass-float rounded-sm overflow-hidden"
+      className="group block card-float rounded-sm overflow-hidden"
     >
       <div className="aspect-[2/3] relative bg-surface-container overflow-hidden">
         {escort.mainPhoto && escort.mainPhoto.startsWith('http') ? (
@@ -74,7 +74,7 @@ export function EscortCard({ escort }: EscortCardProps) {
         {/* Price label — top right */}
         {escort.price && (
           <div className="absolute top-3 right-3 z-10">
-            <div className="bg-black/45 backdrop-blur-sm text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg group-hover:scale-105 transition-transform duration-400">
+            <div className="bg-black/60 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg group-hover:scale-105 transition-transform duration-400">
               {formatPrice(escort.price)}
             </div>
           </div>
@@ -97,7 +97,7 @@ export function EscortCard({ escort }: EscortCardProps) {
                 )}
               </div>
             </div>
-            <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-black/35 backdrop-blur-sm">
+            <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-black/50">
               {hasVideos ? (
                 <svg className="w-4 h-4 text-white/90" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M5 4h2a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2zm0 2v6h2V6H5zm10 .75l4.72-2.36a1 1 0 011.28 1.28L18.64 10.3a1 1 0 010 .72l2.36 4.72a1 1 0 01-1.28 1.28L15 14.66V17a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6a1 1 0 011-1h2a1 1 0 011 1v.75z" />

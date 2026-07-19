@@ -169,6 +169,24 @@ body {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Igual que glass-float pero SIN backdrop-filter: para superficies cubiertas
+   por una foto (cards de la grilla), donde el blur no se ve y solo cuesta paint */
+.card-float {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(208, 196, 195, 0.15);
+  box-shadow:
+    0 12px 40px rgba(175, 80, 113, 0.08),
+    0 4px 16px rgba(34, 29, 29, 0.06);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-float:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 60px rgba(175, 80, 113, 0.12),
+    0 8px 24px rgba(34, 29, 29, 0.08);
+}
+
 .glass-float:hover {
   transform: translateY(-4px);
   box-shadow:

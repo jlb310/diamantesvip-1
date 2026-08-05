@@ -68,8 +68,9 @@ const BENEFITS = [
 const PLANS = [
   {
     name: 'Plan Diamante Vip',
-    price: '$380.000',
-    period: '/mes',
+    price: '$280.000',
+    period: 'Oferta válida por 30 días',
+    regularPrice: '$349.990',
     features: [
       { text: 'Perfil completo con fotos ilimitadas' },
       { text: 'Videos en tu perfil' },
@@ -243,8 +244,13 @@ export default function AnunciatePage() {
                 <h3 className="text-xl font-display mb-2 text-center" style={{ color: '#727272' }}>{plan.name}</h3>
                 <div className="mb-6 text-center">
                   <span className="text-3xl font-display" style={{ color: '#db7581' }}>{plan.price}</span>
+                  {plan.regularPrice && (
+                    <div className="text-sm mt-1" style={{ color: '#8c8484' }}>
+                      Valor normal: <span className="line-through">{plan.regularPrice}</span>
+                    </div>
+                  )}
                   {plan.period && (
-                    <span className="text-muted-light text-sm ml-1">{plan.period}</span>
+                    <div className="text-muted-light text-sm mt-1">{plan.period}</div>
                   )}
                 </div>
                 <ul className="space-y-3 mb-8">
